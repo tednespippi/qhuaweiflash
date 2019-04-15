@@ -101,7 +101,7 @@ char ptbuf[0x800];
 
 in=fopen(filename,"r");
 if (in == 0) {
-  QMessageBox::critical(0,"Ошибка","Ошибка открытия файла");
+  QMessageBox::critical(0,"Erreur","Erreur lors de l'ouverture du fichier");
   return 0;
 }
 
@@ -109,18 +109,18 @@ if (in == 0) {
 fsize=fread(ptbuf,1,0x800,in);
 fclose(in);
 if (fsize != 0x800) {
-  QMessageBox::critical(0,"Ошибка","Слишком короткий файл");
+  QMessageBox::critical(0,"Erreur","Fichier trop court");
   return 0;
 }  
 if (strncmp((char*)ptbuf,"pTableHead",10) != 0) {
-  QMessageBox::critical(0,"Ошибка","Файл не является таблицей разделов");
+  QMessageBox::critical(0,"Erreur","Le fichier n'est pas une table de partition");
   return 0;
 }  
 
 // ищем таблицу разделов внутри загрузчика
 ptoff=find_ptable(pbuf[1], part[1].size);
 if (ptoff == 0) {
-  QMessageBox::critical(0,"Ошибка","В загрузчике на найдена встроенная таблица разделов");
+  QMessageBox::critical(0,"Erreur","La table de partition intégrée se trouve dans le chargeur de démarrage.");
   return 0;
 }  
 // замещаем таблицу разделов
@@ -131,22 +131,22 @@ return 1;
 
 
 //***************************************
-//* Выбор файла загрузчика
+//* Sélectionnez le fichier d'amorçage
 //***************************************
 void usbldialog::browse() {
 
 QString name;  
-name=QFileDialog::getOpenFileName(this,"Выбор файла загрузчика",".","usbloader (*.bin);;All files (*.*)");
+name=QFileDialog::getOpenFileName(this,"Sélectionnez le fichier d'amorçage",".","usbloader (*.bin);;All files (*.*)");
 fname->setText(name);
 }
 
 //***************************************
-//* Выбор файла таблицы разделов
+//* Sélection d'un fichier de table de partition
 //***************************************
 void usbldialog::ptbrowse() {
 
 QString name;  
-name=QFileDialog::getOpenFileName(this,"Выбор файла таблицы разделов",".","usbloader (*.bin);;All files (*.*)");
+name=QFileDialog::getOpenFileName(this,"Sélection d'un fichier de table de partition",".","usbloader (*.bin);;All files (*.*)");
 ptfname->setText(name);
 }
 
@@ -172,7 +172,7 @@ if (koff != 0) {
       return 1;
 }
 
-QMessageBox::critical(0,"Ошибка"," В загрузчике нет ANDROID-компонента - fastboot-загрузка невозможна");
+QMessageBox::critical(0,"Erreur"," Il n'y a pas de composant ANDROID dans le chargeur - le téléchargement rapide n'est pas possible");
 return 0;
   
 }
@@ -262,7 +262,7 @@ static char ptfilename[200]={0};
 FILE* in;
 
 usbldialog* qd=new usbldialog;
-qd->setWindowTitle("Загрузка usbloader");
+qd->setWindowTitle("Chargement usbloader");
 QVBoxLayout* vl=new QVBoxLayout(qd);
 
 QFont font;
@@ -293,7 +293,7 @@ QToolButton* fselector = new QToolButton(qd);
 fselector->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_DirIcon))); 
 gvl->addWidget(fselector,0,2);
 
-QLabel* lbl3=new QLabel("Таблица разделов:");
+QLabel* lbl3=new QLabel("Table de partition:");
 gvl->addWidget(lbl3,1,0);
 
 qd->ptfname=new QLineEdit(qd);
@@ -311,19 +311,19 @@ ptclear->setIcon(QIcon(QApplication::style()->standardIcon(QStyle::SP_TrashIcon)
 gvl->addWidget(ptclear,1,3);
 
 // кнопки выбора режима загрузки
-QCheckBox* fbflag = new QCheckBox("Загрузка в режиме FASTBOOT",qd);
+QCheckBox* fbflag = new QCheckBox("Chargement в режиме FASTBOOT",qd);
 vl->addWidget(fbflag);
 
-QCheckBox* isbadflag= new QCheckBox("Отключить контроль дефектных блоков",qd);
+QCheckBox* isbadflag= new QCheckBox("Désactiver le contrôle des blocs défectueux",qd);
 vl->addWidget(isbadflag);
 
-QCheckBox* patchflag= new QCheckBox("Отключить патч eraseall (ОПАСНО!!!)",qd);
+QCheckBox* patchflag= new QCheckBox("Désactiver le correctif eraseall (DANGER !!!)",qd);
 vl->addWidget(patchflag);
 
 QDialogButtonBox* buttonBox = new QDialogButtonBox(qd);
 buttonBox->setOrientation(Qt::Horizontal);
-buttonBox->addButton("Отмена",QDialogButtonBox::RejectRole);
-buttonBox->addButton("Загрузка",QDialogButtonBox::AcceptRole);
+buttonBox->addButton("Annuler",QDialogButtonBox::RejectRole);
+buttonBox->addButton("Chargement",QDialogButtonBox::AcceptRole);
 vl->addWidget(buttonBox,10,Qt::AlignHCenter);
 
 QObject::connect(buttonBox, SIGNAL(accepted()), qd, SLOT(accept()));
@@ -352,7 +352,7 @@ if (res != QDialog::Accepted) return;
 // открываем файл загрузчика
 in=fopen(filename,"r");
 if (in == 0) {
-  QMessageBox::critical(0,"Ошибка","Ошибка открыти файла");
+  QMessageBox::critical(0,"Erreur","Erreur ouvrir le fichier");
   return;
 }  
   
@@ -360,7 +360,7 @@ if (in == 0) {
 // Прверяем сигнатуру usloader
 fread(&i,1,4,in);
 if (i != 0x20000) {
-  QMessageBox::critical(0,"Ошибка","Файл не является загрузчиком usbloader");
+  QMessageBox::critical(0,"Erreur","Le fichier n'est pas un chargeur de démarrage usbloader");
   fclose(in);
   return;
 }  
@@ -389,7 +389,7 @@ for(i=0;i<numparts;i++) {
  pbuf[i]=(uint8_t*)malloc(part[i].size);
  fsize=fread(pbuf[i],1,part[i].size,in);
  if (part[i].size != fsize) {
-      QMessageBox::critical(0,"Ошибка","Неожиданный конец файла");
+      QMessageBox::critical(0,"Erreur","Fin de fichier inattendue");
       fclose(in);
       return;
  }
@@ -408,7 +408,7 @@ if (fflag) {
 if (!pflag) {
   res=pv7r2(pbuf[1], part[1].size)+ pv7r11(pbuf[1], part[1].size) + pv7r1(pbuf[1], part[1].size) + pv7r22(pbuf[1], part[1].size) + pv7r22_2(pbuf[1], part[1].size);
   if (res == 0)  {
-   QMessageBox::critical(0,"Ошибка","Не найдена сигнатура патча, загрузка не выполняется");
+   QMessageBox::critical(0,"Erreur","Signature du correctif introuvable, le chargement n'est pas effectué");
    return;
   }  
 }  
@@ -417,7 +417,7 @@ if (!pflag) {
 if (bflag) {
   res=perasebad(pbuf[1], part[1].size);
   if (res == 0)  {
-   QMessageBox::critical(0,"Ошибка","Не найдена сигнатура BAD ERASE, загрузка не выполняется");
+   QMessageBox::critical(0,"Erreur","BAD ERASE signature non trouvée, le chargement n'est pas effectué");
    return;
   }  
 }  
@@ -431,7 +431,7 @@ if (strlen(ptfilename) != 0) {
 //-------------------------------------------------------------------  
 // Настройка SIO
 if (!open_port())  {
-  QMessageBox::critical(0,"Ошибка","Последовательный порт не открывается");
+  QMessageBox::critical(0,"Erreur","Le port série ne s'ouvre pas");
   return;
 }  
 
@@ -442,7 +442,7 @@ write(siofd,"A",1);   // отправляем произвольный байт 
 bl=read(siofd,&c,1);
 // ответ должен быть U (0x55)
 if (c != 0x55) {
-  QMessageBox::critical(0,"Ошибка","Последовательный порт не находится в режиме USB Boot");
+  QMessageBox::critical(0,"Erreur","Le port série n'est pas en mode de démarrage USB");
   close_port();
   return;
 }  
@@ -454,11 +454,11 @@ QFormLayout* lmf=new QFormLayout(ind);
 
 QProgressBar* partbar = new QProgressBar(ind);
 partbar->setValue(0);
-lmf->addRow("Раздел:",partbar);
+lmf->addRow("Section:",partbar);
 
 QProgressBar* totalbar = new QProgressBar(ind);
 totalbar->setValue(0);
-lmf->addRow("Всего:",totalbar);
+lmf->addRow("Total:",totalbar);
 
 ind->show();
 
@@ -469,7 +469,7 @@ for(bl=0;bl<numparts;bl++) {
   
  // стартовый пакет  
  if (!start_part(part[bl].size,part[bl].adr,part[bl].lmode)) {
-   QMessageBox::critical(0,"Ошибка","Модем отверг заголовок компонента");
+   QMessageBox::critical(0,"Erreur","En-tête de composant rejeté par le modem");
    goto leave;
  }  
 
@@ -486,7 +486,7 @@ for(bl=0;bl<numparts;bl++) {
     QCoreApplication::processEvents();
     
     if (!send_data_packet(pktcount++,(uint8_t*)(pbuf[bl]+adr),datasize)) {
-      QMessageBox::critical(0,"Ошибка","Модем отверг пакет данных");
+      QMessageBox::critical(0,"Erreur","Paquet de données rejeté par modem");
       goto leave;
     }  
   }
@@ -495,7 +495,7 @@ for(bl=0;bl<numparts;bl++) {
 
 
   if (!close_part(pktcount)) {
-      QMessageBox::critical(0,"Ошибка","Модем отверг команду окончания компонента");
+      QMessageBox::critical(0,"Erreur","Le modem rejette la commande pour terminer le composant");
       goto leave;
     }  
 } 
@@ -504,7 +504,7 @@ totalbar->setValue(100);
 partbar->setValue(100);
 QCoreApplication::processEvents();
       
-QMessageBox::information(0,"ОК","Загрузка окончена");
+QMessageBox::information(0,"ОК","Téléchargement terminé");
 
 leave:
 close_port();

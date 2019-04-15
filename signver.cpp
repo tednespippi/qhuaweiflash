@@ -60,8 +60,8 @@ signtype=dload_id&0x7;
 sprintf((char*)signver,"^SIGNVER=%i,0,%s,%i",signtype,signver_hash,signlen);
 res=atcmd((char*)signver,replybuf);
 if ( (res<sizeof(SVrsp)) || (memcmp(replybuf,SVrsp,sizeof(SVrsp)) != 0) ) {
-   sprintf(message,"Ошибка проверки цифровой сигнатуры - %02x",replybuf[2]);
-   QMessageBox::critical(0,"Ошибка",message);
+   sprintf(message,"Erreur lors de la vérification de la signature numérique -% 02x",replybuf[2]);
+   QMessageBox::critical(0,"Erreur",message);
    return -2;
 }
 return 1;
@@ -112,14 +112,14 @@ QFormLayout* lm=new QFormLayout(sd);
 char str[200];
 
 QLabel* dlid=new QLabel(fw_description(dload_id));
-lm->addRow("Тип прошивки",dlid);
+lm->addRow("Type de firmware",dlid);
 
 sprintf(str,"%i",signlen);
 QLabel* signln=new QLabel(str);
-lm->addRow("Размер подписи",signln);
+lm->addRow("Taille de la signature",signln);
 
 QLabel* hash=new QLabel(signver_hash);
-lm->addRow("Хеш ключа",hash);
+lm->addRow("Clé de hachage",hash);
 
 lm->addRow(0,btn);
 

@@ -43,8 +43,8 @@ if (strncmp((char*)replybuf+2,"2.0",3) == 0) return 1;
 for (i=2;i<res;i++) {
   if (replybuf[i] == 0x0d) replybuf[i]=0;
 }  
-str.sprintf("Неправильная версия монитора прошивки - %s",replybuf+2);
-QMessageBox::critical(0,"Ошибка",str);
+str.sprintf("Version de moniteur de microprogramme incorrecte -% s",replybuf+2);
+QMessageBox::critical(0,"Erreur",str);
 return -1;
 }
 
@@ -56,7 +56,7 @@ return -1;
 //  size - полный размер записываемого раздела
 // 
 //*  результат:
-//  false - ошибка
+//  false - une erreur
 //  true - команда принята модемом
 //***************************************************
 bool dload_start(uint32_t code,uint32_t size) {
@@ -85,7 +85,7 @@ else return true;
 //  pimage - адрес начала образа раздела в памяти
 // 
 //*  результат:
-//  false - ошибка
+//  false - une erreur
 //  true - команда принята модемом
 //***************************************************
 bool dload_block(uint32_t part, uint32_t blk, uint8_t* pimage) {
@@ -132,7 +132,7 @@ else return true;
 //  size - размер раздела
 // 
 //*  результат:
-//  false - ошибка
+//  false - une erreur
 //  true - команда принята модемом
 //***************************************************
 bool dload_end(uint32_t code, uint32_t size) {
@@ -180,7 +180,7 @@ uint8_t signflag=0,rebootflag=0;
 unsigned char OKrsp[]={0x0d, 0x0a, 0x4f, 0x4b, 0x0d, 0x0a};
   
 QDialog* Flasher=new QDialog;
-Flasher->setWindowTitle("Прошивка модема");
+Flasher->setWindowTitle("Micrologiciel du modem");
 QVBoxLayout* vl=new QVBoxLayout(Flasher);  
 
 QFont font;
@@ -188,7 +188,7 @@ font.setPointSize(17);
 font.setBold(true);
 font.setWeight(75);
 
-QLabel* lbl1=new QLabel("Прошивка модема");
+QLabel* lbl1=new QLabel("Micrologiciel du modem");
 lbl1->setFont(font);
 lbl1->setScaledContents(true);
 lbl1->setStyleSheet("QLabel { color : blue; }");
@@ -196,7 +196,7 @@ lbl1->setStyleSheet("QLabel { color : blue; }");
 
 vl->addWidget(lbl1,4,Qt::AlignHCenter);
 
-QCheckBox* dsign = new QCheckBox("Использовать цифровую подпись",Flasher);
+QCheckBox* dsign = new QCheckBox("Utiliser une signature numérique",Flasher);
 vl->addWidget(dsign);
 
 // проверяем наличие подписи и деактивируем управляющие кнопки, если ее нет
@@ -212,7 +212,7 @@ else {
 }
 
 
-QCheckBox* creboot = new QCheckBox("Перезагрузка по окончании прошивки",Flasher);
+QCheckBox* creboot = new QCheckBox("Redémarrez à la fin du firmware",Flasher);
 creboot->setChecked(true);
 vl->addWidget(creboot);
 
@@ -241,24 +241,24 @@ Flasher=new QDialog;
 QFormLayout* glm=new QFormLayout(Flasher);
 
 QLabel* pversion = new QLabel(Flasher);
-glm->addRow("Версия протокола:",pversion);
+glm->addRow("Version du protocole:",pversion);
 
 QLabel* cpart = new QLabel(Flasher);
-glm->addRow("Текущий раздел:",cpart);
+glm->addRow("Section actuelle:",cpart);
 
 QProgressBar* partbar = new QProgressBar(Flasher);
 partbar->setValue(0);
-glm->addRow("Раздел:",partbar);
+glm->addRow("Section:",partbar);
 
 QProgressBar* totalbar = new QProgressBar(Flasher);
 totalbar->setValue(0);
-glm->addRow("Всего:",totalbar);
+glm->addRow("Total:",totalbar);
 
 Flasher->show();
   
 // Настройка SIO
 if (!open_port())  {
-  QMessageBox::critical(0,"Ошибка","Последовательный порт не открывается");
+  QMessageBox::critical(0,"Erreur","Le port série ne s'ouvre pas");
   goto leave;
 }  
   
@@ -266,12 +266,12 @@ tcflush(siofd,TCIOFLUSH);  // очистка выходного буфера
 
 res=dloadversion();
 if (res == -1) {
-  QMessageBox::critical(0,"Ошибка","Неподдерживаемая версия протокола прошивки");
+  QMessageBox::critical(0,"Erreur","Version du firmware non supportée");
   goto leave;
 }
 
 if (res == 0) {
-  QMessageBox::critical(0,"Ошибка","Порт не находится в режиме прошивки");
+  QMessageBox::critical(0,"Erreur","Le port n'est pas en mode firmware");
   goto leave;
 }  
 
@@ -279,7 +279,7 @@ if (res == 0) {
 if (signflag) { 
   res=send_signver();
   if (!res) {
-    QMessageBox::critical(0,"Ошибка","Ошибка проверки цифровой подписи");
+    QMessageBox::critical(0,"Erreur","Erreur de vérification de signature numérique");
     goto leave;
   }  
 }  
@@ -288,24 +288,24 @@ if (signflag) {
 usleep(100000);
 res=atcmd("^DATAMODE",replybuf);
 if (res != 6) {
-  QMessageBox::critical(0,"Ошибка входа в HDLC","Неправильный ответ на команду ^datamode");
+  QMessageBox::critical(0,"Erreur de connexion HDLC","Réponse incorrecte à la commande ^ datamode");
   goto leave;
 }  
 if (memcmp(replybuf,OKrsp,6) != 0) {
-  QMessageBox::critical(0,"Ошибка входа в HDLC","Команда ^datamode отвергнута модемом");
+  QMessageBox::critical(0,"Erreur de connexion HDLC","Commande ^ Datamode rejetée par modem");
   goto leave;
 }  
 
 iolen=send_cmd(&cmdver,1,(unsigned char*)replybuf);
 if (iolen == 0) {
-  QMessageBox::critical(0,"Ошибка протокола HDLC","Невозможно получить версию протокола прошивки");
+  QMessageBox::critical(0,"Erreur de protocole HDLC","Impossible d'obtenir la version du firmware");
   goto leave;
 }  
 // отбрасываем начальный 7E если он есть в ответе
 if (replybuf[0] == 0x7e) memcpy(replybuf,replybuf+1,iolen-1);
 
 if (replybuf[0] != 0x0d) {
-  QMessageBox::critical(0,"Ошибка протокола HDLC","Модем отверг команду получения версии протокола");
+  QMessageBox::critical(0,"Erreur de protocole HDLC","Commande rejetée par le modem pour obtenir la version du protocole");
   goto leave;
 }  
 
@@ -326,8 +326,8 @@ for(part=0;part<ptable->index();part++) {
 
  // команда начала раздела
  if (!dload_start(ptable->code(part),ptable->psize(part))) {
-  txt.sprintf("Раздел %s отвергнут",ptable->name(part)); 
-  QMessageBox::critical(0,"Ошибка",txt);
+  txt.sprintf("Section% s rejetée",ptable->name(part)); 
+  QMessageBox::critical(0,"Erreur",txt);
   goto leave;
 }  
     
@@ -340,16 +340,16 @@ for(blk=0;blk<maxblock;blk++) {
 
  // Отсылаем очередной блок
   if (!dload_block(part,blk,ptable->iptr(part))) {
-   txt.sprintf("Блок %i раздела %s отвергнут",blk,ptable->name(part)); 
-   QMessageBox::critical(0,"ошибка",txt);
+   txt.sprintf("Bloc% i de la section% s rejetée",blk,ptable->name(part)); 
+   QMessageBox::critical(0,"une erreur",txt);
    goto leave;
  }  
 }    
 
 // закрываем раздел
  if (!dload_end(ptable->code(part),ptable->psize(part))) {
-//   txt.sprintf("Ошибка закрытия раздела %s",ptable->name(part)); 
-//   QMessageBox::critical(0,"ошибка",txt);
+//   txt.sprintf("Erreur de fermeture de la section% s",ptable->name(part)); 
+//   QMessageBox::critical(0,"une erreur",txt);
 //   leave();
 //   return 0;
  }  
@@ -362,7 +362,7 @@ else end_hdlc();
 totalbar->setValue(100);
 partbar->setValue(100);
 QCoreApplication::processEvents();
-QMessageBox::information(0,"ОК","Запись завершена без ошибок");
+QMessageBox::information(0,"ОК","Enregistrement terminé sans erreur");
 
 // Завершаем процесс
 leave:

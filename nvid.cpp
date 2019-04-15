@@ -18,7 +18,7 @@ struct nvdesc nvid[] = {
 {    0,"DRV_IMEI","IMEI"},
 {    4,"DRV_RESUME_FLAG",0},
 {    5,"MSP_CALIBRATED_TIME",0},
-{    6,"MSP_SERIAL_NUMBER","Серийный номер"},
+{    6,"MSP_SERIAL_NUMBER","Numéro de série"},
 {    7,"DRV_LED_CONTROL",0},
 {    8,"MSP_LOGFILE_MAX_SIZE",0},
 {    9,"MSP_WATCHDOG_FLAG",0},

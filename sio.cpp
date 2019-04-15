@@ -113,9 +113,9 @@ unsigned int send_unframed_buf(uint8_t* outcmdbuf, unsigned int outlen) {
 
 
 tcflush(siofd,TCIOFLUSH);  // сбрасываем недочитанный буфер ввода
-if (write(siofd,"\x7e",1)  == 0) { printf("\n Ошибка записи префикса команды");return 0; } // отсылаем префикс
+if (write(siofd,"\x7e",1)  == 0) { printf("\ n Erreur lors de l'écriture du préfixe de commande");return 0; } // отсылаем префикс
 
-if (write(siofd,outcmdbuf,outlen) == 0) {   printf("\n Ошибка записи команды");return 0;  }
+if (write(siofd,outcmdbuf,outlen) == 0) {   printf("\ n erreur d'écriture de commande");return 0;  }
 tcdrain(siofd);  // ждем окончания вывода блока
 return 1;
 }
@@ -135,11 +135,11 @@ unsigned char replybuf[14000];
 
 incount=0;
 if (read(siofd,&c,1) != 1) {
-//  printf("\n Нет ответа от модема");
+//  printf("\ n Pas de réponse du modem");
   return 0; // модем не ответил или ответил неправильно
 }
 //if (c != 0x7e) {
-//  printf("\n Первый байт ответа - не 7e: %02x",c);
+//  printf("\ n Le premier octet de la réponse n’est pas 7e:% 02x",c);
 //  return 0; // модем не ответил или ответил неправильно
 //}
 replybuf[incount++]=c;
@@ -148,7 +148,7 @@ replybuf[incount++]=c;
 if (masslen != 0) {
  res=read(siofd,replybuf+1,masslen-1);
  if (res != (masslen-1)) {
-   printf("\nСлишком короткий ответ от модема: %i байт, ожидалось %i байт\n",res+1,masslen);
+   printf("\ nLa réponse du modem est trop courte:% i octets,% i octets attendus \ n",res+1,masslen);
    dump(replybuf,res+1,0);
    return 0;
  }  
@@ -236,7 +236,7 @@ unsigned char outcmdbuf[14096];
 unsigned int  iolen;
 
 iolen=convert_cmdbuf(incmdbuf,blen,outcmdbuf);  
-if (!send_unframed_buf(outcmdbuf,iolen)) return 0; // ошибка передачи команды
+if (!send_unframed_buf(outcmdbuf,iolen)) return 0; // une erreur передачи команды
 return receive_reply(iobuf,0);
 }
 
@@ -330,7 +330,7 @@ return res;
   
 
 //*************************************************
-//* Перезагрузка модема
+//* Redémarrer le modem
 //*************************************************
 void modem_reboot() {
 
@@ -342,7 +342,7 @@ atcmd("^RESET",replybuf);    // АТ-команда перезагрузки
 }
 
 //*************************************************
-//* Выход из HDLC-режима
+//* Sortie из HDLC-режима
 //*************************************************
 void end_hdlc() {
 

@@ -1,5 +1,5 @@
 // 
-//  Сохранение файла прошивки на диск
+//  Enregistrer le fichier прошивки на диск
 // 
 #include <QtWidgets>
 
@@ -30,7 +30,7 @@ if (newname || fwfilename.isEmpty())  {
   // выбираем новое имя файла
   QString fn=fwfilename;
 
-  fn=QFileDialog::getSaveFileName(0,"Имя файла",fn,"firmware (*.fw);;All files (*.*)");
+  fn=QFileDialog::getSaveFileName(0,"Prénom файла",fn,"firmware (*.fw);;All files (*.*)");
   if (fn.isEmpty()) return;
   fwfilename=fn;  
 }
@@ -41,7 +41,7 @@ dlcode=dload_id&7;
 
 out=fopen(fname,"w");
 if (out == 0) {
-    QMessageBox::critical(0,"Ошибка","Ошибка создания файла");
+    QMessageBox::critical(0,"Erreur","Erreur lors de la création du fichier");
     return;
 }
 
@@ -56,7 +56,7 @@ fwrite(hdr,1,sizeof(hdr),out);
 QWidget* pb=new QWidget();
 QVBoxLayout* plm=new QVBoxLayout(pb);
 
-QLabel* lb = new QLabel("Сохранение разделов",pb);
+QLabel* lb = new QLabel("Sauvegarder des partitions",pb);
 QFont font;
 font.setPointSize(14);
 font.setBold(true);

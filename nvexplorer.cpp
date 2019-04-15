@@ -34,20 +34,20 @@ raise();
 activateWindow();
 
 // Заголовок окна
-setWindowTitle("Редактирование образа NVRAM");
+setWindowTitle("Édition d'image NVRAM");
 
 
 // Главное меню
 menubar = new QMenuBar(this);
 setMenuBar(menubar);
 
-menu_file = new QMenu("Файл",menubar);
+menu_file = new QMenu("Fichier",menubar);
 menubar->addAction(menu_file->menuAction());
 
-menu_edit = new QMenu("Правка",menubar);
+menu_edit = new QMenu("Éditer",menubar);
 menubar->addAction(menu_edit->menuAction());
 
-menu_view = new QMenu("Вид",menubar);
+menu_view = new QMenu("Voir",menubar);
 menubar->addAction(menu_view->menuAction());
 
 // тулбар
@@ -66,7 +66,7 @@ vlm=new QVBoxLayout(central);
 memcpy(&nvhd, pdata, sizeof(nvhd));
 
 // if (nvhd.magicnum != FILE_MAGIC_NUM) {
-//   QMessageBox::critical(0,"Ошибка","Ошибка структуры образа NVRAM - неправильная сигнатура заголовка");
+//   QMessageBox::critical(0,"Erreur","Erreur de structure d'image NVRAM - Signature d'en-tête incorrecte");
 //   delete this;
 // }
 
@@ -123,7 +123,7 @@ nvtable=new QTableWidget(nvhd.item_count,5,central);
 
 // заголовок таблицы
 QStringList plst;
-plst << "NVID" << "Размер" <<"Компонент" <<"Имя" <<"Содержимое";
+plst << "NVID" << "La taille" <<"Composant" <<"Prénom" <<"Le contenu";
 nvtable->setHorizontalHeaderLabels(plst);
 
 // выводим список ячеек в таблицу
@@ -159,7 +159,7 @@ for(i=0;i<nvhd.item_count;i++) {
   cell->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
   nvtable->setItem(i,3,cell);
 
-  // Содержимое  
+  // Le contenu  
   datacell(i);
 }
 
@@ -177,26 +177,26 @@ vlm->addWidget(nvtable,3);
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 // пункты меню
-menu_file->addAction(QIcon::fromTheme("document-save"),"Сохранить",this,SLOT(save_all()),QKeySequence::Save);
-toolbar->addAction(QIcon::fromTheme("document-save"),"Сохранить",this,SLOT(save_all()));
+menu_file->addAction(QIcon::fromTheme("document-save"),"Enregistrer",this,SLOT(save_all()),QKeySequence::Save);
+toolbar->addAction(QIcon::fromTheme("document-save"),"Enregistrer",this,SLOT(save_all()));
 menu_file->addSeparator();
-menu_file->addAction("Выход",this,SLOT(close()),QKeySequence("Esc"));
+menu_file->addAction("Sortie",this,SLOT(close()),QKeySequence("Esc"));
 
 toolbar->addSeparator();
 
-menu_edit->addAction(QIcon(":/icon_hex.png"),"Редактировать ячейку",this,SLOT(edititem()),QKeySequence("F2"));
-toolbar->addAction(QIcon(":/icon_hex.png"),"Редактировать ячейку",this,SLOT(edititem()));
+menu_edit->addAction(QIcon(":/icon_hex.png"),"Modifier la cellule",this,SLOT(edititem()),QKeySequence("F2"));
+toolbar->addAction(QIcon(":/icon_hex.png"),"Modifier la cellule",this,SLOT(edititem()));
 
-menu_edit->addAction(QIcon(":/icon_extract.png"),"Извлечь ячейку в файл",this,SLOT(extract_item()),QKeySequence("F11"));
-toolbar->addAction(QIcon(":/icon_extract.png"),"Извлечь ячейку в файл",this,SLOT(extract_item()));
+menu_edit->addAction(QIcon(":/icon_extract.png"),"Extraire la cellule dans un fichier",this,SLOT(extract_item()),QKeySequence("F11"));
+toolbar->addAction(QIcon(":/icon_extract.png"),"Extraire la cellule dans un fichier",this,SLOT(extract_item()));
 
-menu_edit->addAction(QIcon::fromTheme("object-flip-vertical"),"Загрузить ячейку из файла",this,SLOT(replace_item()),0);
-toolbar->addAction(QIcon::fromTheme("object-flip-vertical"),"Загрузить ячейку из файла",this,SLOT(replace_item()));
+menu_edit->addAction(QIcon::fromTheme("object-flip-vertical"),"Charger une cellule à partir d'un fichier",this,SLOT(replace_item()),0);
+toolbar->addAction(QIcon::fromTheme("object-flip-vertical"),"Charger une cellule à partir d'un fichier",this,SLOT(replace_item()));
 
-menu_view->addAction(QIcon::fromTheme("zoom-in"),"Увеличить шрифт",this,SLOT(zoomin()),QKeySequence("Ctrl++"));
-toolbar->addAction(QIcon::fromTheme("zoom-in"),"Увеличить шрифт",this,SLOT(zoomin()));
-menu_view->addAction(QIcon::fromTheme("zoom-out"),"Уменьшить шрифт",this,SLOT(zoomout()),QKeySequence("Ctrl+-"));
-toolbar->addAction(QIcon::fromTheme("zoom-out"),"Уменьшить шрифт",this,SLOT(zoomout()));
+menu_view->addAction(QIcon::fromTheme("zoom-in"),"Augmenter la police",this,SLOT(zoomin()),QKeySequence("Ctrl++"));
+toolbar->addAction(QIcon::fromTheme("zoom-in"),"Augmenter la police",this,SLOT(zoomin()));
+menu_view->addAction(QIcon::fromTheme("zoom-out"),"Réduire la taille de la police",this,SLOT(zoomout()),QKeySequence("Ctrl+-"));
+toolbar->addAction(QIcon::fromTheme("zoom-out"),"Réduire la taille de la police",this,SLOT(zoomout()));
 
 connect(nvtable,SIGNAL(cellActivated(int,int)),SLOT(edititem()));
 
@@ -211,7 +211,7 @@ nvexplorer::~nvexplorer() {
 int reply;
 
 if (changed) {
-  reply=QMessageBox::warning(this,"Запись данных","Содержимое NVRAM изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
+  reply=QMessageBox::warning(this,"Enregistrement de données","Le contenu de la NVRAM a changé, enregistrer?",QMessageBox::Ok | QMessageBox::Cancel);
   if (reply == QMessageBox::Ok) {
     // сохранение данных
     save_all();
@@ -303,7 +303,7 @@ QDialog* qd=new QDialog;
 QVBoxLayout* vlm=new QVBoxLayout(qd);
 
 // заголовок
-title.sprintf("Редактирование ячейки %i",itemlist[row].id);
+title.sprintf("Modification de la cellule% i",itemlist[row].id);
 config=new QSettings("forth32","qhuaweiflash",this);
 qd->setWindowTitle(title);
 
@@ -322,7 +322,7 @@ dhex->setOverwriteMode(true);
 dhex->setHexCaps(true);
 dhex->setHighlighting(true);
 
-// Загрузка данных в редактор
+// Chargement данных в редактор
 dhex->setData(hexcup);
 
 dhex->setCursorPosition(0);
@@ -332,7 +332,7 @@ dhex->setReadOnly(false);
 vlm->addWidget(dhex);
 
 // комментарии к шорткутам
-QLabel* lbl=new QLabel("Enter - сохранить изменения,   Esc - отменить",qd);
+QLabel* lbl=new QLabel("Entrer - enregistrer les modifications, Esc - annuler",qd);
 vlm->addWidget(lbl);
 
 // кнопки save и cancel
@@ -417,12 +417,12 @@ QString filename;
 
 int row=nvtable->currentRow();
 filename.sprintf("nvitem-%05i.bin",itemlist[row].id);
-filename=QFileDialog::getSaveFileName(this,"Имя сохраняемого файла",filename,"All files (*.*)");
+filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*.*)");
 if (filename.isEmpty()) return;
   
 QFile out(filename,this);
 if (!out.open(QIODevice::WriteOnly)) {
-    QMessageBox::critical(0,"Ошибка","Ошибка создания файла");
+    QMessageBox::critical(0,"Erreur","Erreur lors de la création du fichier");
     return;
 }
 out.write((char*)(pdata+itemoff_idx(row)),itemlist[row].len);
@@ -430,7 +430,7 @@ out.close();
 }
 
 //**********************************************************************
-//* Загрузка ячейки из файла
+//* Chargement ячейки из файла
 //**********************************************************************
 void nvexplorer::replace_item() {
 
@@ -439,19 +439,19 @@ QString str;
 
 int row=nvtable->currentRow();
 filename.sprintf("nvitem-%05i.bin",itemlist[row].id);
-filename=QFileDialog::getOpenFileName(this,"Имя файла",filename,"All files (*.*)");
+filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*.*)");
 if (filename.isEmpty()) return;
   
 QFile in(filename,this);
 if (!in.open(QIODevice::ReadOnly)) {
-    QMessageBox::critical(0,"Ошибка","Ошибка открытия файла");
+    QMessageBox::critical(0,"Erreur","Erreur lors de l'ouverture du fichier");
     return;
 }
 
 if (in.size() != itemlist[row].len) {
     in.close();
-    str.sprintf("Размер файла (%i) не совпадает с размером ячейки (%i)",(uint32_t)in.size(),(uint32_t)itemlist[row].len);
-    QMessageBox::critical(0,"Ошибка",str);
+    str.sprintf("La taille du fichier (% i) ne correspond pas à la taille de la cellule (% i)",(uint32_t)in.size(),(uint32_t)itemlist[row].len);
+    QMessageBox::critical(0,"Erreur",str);
     return;
 }  
 

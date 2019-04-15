@@ -51,7 +51,7 @@ QStringList recent=rc.value("/recent/rfiles").toStringList();
 
 in=fopen(filename.toLocal8Bit(),"r");
 if (in == 0) {
-  QMessageBox::critical(0,"Ошибка","Ошибка открытия файла");
+  QMessageBox::critical(0,"Erreur","Erreur lors de l'ouverture du fichier");
   return;
 }  
 
@@ -108,7 +108,7 @@ void MainWindow::AppendFwFile() {
 QString fwname;
 
 QFileDialog* qf=new QFileDialog(this);
-fwname=qf->getOpenFileName(0,"Выбор файла прошивки","","*.exe *.bin *.fw");
+fwname=qf->getOpenFileName(0,"Sélectionnez le fichier de firmware","","*.exe *.bin *.fw");
 delete qf;
 if (fwname.isEmpty()) return;
 OpenFwFile(fwname);
@@ -231,8 +231,8 @@ void MainWindow::ask_save() {
 if (modified) {
  // создаем панель запроса на сохранение
  QMessageBox msgBox;  
- msgBox.setText("Образ прошивки изменен");
- msgBox.setInformativeText("Сохранить изменения?");
+ msgBox.setText("L'image du micrologiciel a changé");
+ msgBox.setInformativeText("Enregistrer les modifications?");
  msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard);
  msgBox.setDefaultButton(QMessageBox::Save);
  int reply = msgBox.exec();  
@@ -354,7 +354,7 @@ modebuttons->show();
 // Режимы структурного просмотра
 if (structure_mode->isChecked()) {
   
-   // Разделы ptable (таблица разделов флешки)
+   // Sectionы ptable (таблица разделов флешки)
    //###########################################
    if ((ptable->ptype(idx) == part_ptable) && (is_ptable(ptable->iptr(idx)))) {
     partmode=part_ptable; 
@@ -369,11 +369,11 @@ if (structure_mode->isChecked()) {
     return;
    }
    
-   // Разделы oeminfo
+   // Sectionы oeminfo
    //###########################################
 
    if (ptable->ptype(idx) == part_oem) {
-    label=new QLabel("Версия WEBUI или DASHBOARD");
+    label=new QLabel("Version WEBUI ou DASHBOARD");
     label->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
     EditorLayout->addWidget(label);
     label->setTextFormat(Qt::RichText);
@@ -449,11 +449,11 @@ uint8_t hdr[92];
 
 // записываем образ раздела
 filename.sprintf("%02i-%08x-%s.fw",np,ptable->code(np),ptable->name(np));
-filename=QFileDialog::getSaveFileName(this,"Имя файла",filename,"firmware (*.fw);;All files (*.*)");
+filename=QFileDialog::getSaveFileName(this,"Prénom файла",filename,"firmware (*.fw);;All files (*.*)");
 if (filename.isEmpty()) return;
 out=fopen(filename.toLocal8Bit(),"w");
 if (out == 0) {
-  QMessageBox::critical(0,"Ошибка","Ошибка создания файла");
+  QMessageBox::critical(0,"Erreur","Erreur lors de la création du fichier");
   return;
 }
 
@@ -477,11 +477,11 @@ QString str;
 FILE* out;
 
 filename.sprintf("%02i-%08x-%s.bin",np,ptable->code(np),ptable->name(np));
-filename=QFileDialog::getSaveFileName(this,"Имя извлекаемого файла",filename,"image (*.bin);;All files (*.*)");
+filename=QFileDialog::getSaveFileName(this,"Prénom извлекаемого файла",filename,"image (*.bin);;All files (*.*)");
 if (filename.isEmpty()) return;
 out=fopen(filename.toLocal8Bit().data(),"w");
 if (out == 0) {
-  QMessageBox::critical(0,"Ошибка","Ошибка открытия файла");
+  QMessageBox::critical(0,"Erreur","Erreur lors de l'ouverture du fichier");
   return;
 }
 fwrite(ptable->iptr(np),1,ptable->psize(np),out);
@@ -530,11 +530,11 @@ strcat(fileselector,";;All files (*.*)");
       
 
 filename.sprintf("%02i-%08x-%s.bin",np,ptable->code(np),ptable->name(np));
-filename=QFileDialog::getOpenFileName(this,"Имя файла с образом раздела",filename,fileselector);
+filename=QFileDialog::getOpenFileName(this,"Prénom файла с образом раздела",filename,fileselector);
 if (filename.isEmpty()) return;
 in=fopen(filename.toLocal8Bit(),"r");
 if (in == 0) {
-  QMessageBox::critical(0,"Ошибка","Ошибка открытия файла");
+  QMessageBox::critical(0,"Erreur","Erreur lors de l'ouverture du fichier");
   printf("\n file %s",filename.toLocal8Bit().data());
   return;
 }
@@ -652,7 +652,7 @@ if (!(
      (pcode -> isModified())
    )) return;  
 
-reply=QMessageBox::warning(this,"Запись заголовка","Заголовок раздела изменен, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
+reply=QMessageBox::warning(this,"Titre de l'enregistrement","Le titre de la section a changé, enregistrer?",QMessageBox::Ok | QMessageBox::Cancel);
 if (reply != QMessageBox::Ok) return;
 if (Platform_input->isModified())  fieldcopy((uint8_t*)ptable->hptr(ci)->unlock,Platform_input->text().toLocal8Bit(),8);
 if (Date_input->isModified())  fieldcopy((uint8_t*)ptable->hptr(ci)->date,Date_input->text().toLocal8Bit(),16);
@@ -680,7 +680,7 @@ if (oemedit != 0) {
   bzero(tdata,ptable->psize(hrow));
   fieldcopy((uint8_t*)tdata,oemedit->text().toLocal8Bit(),oemedit->text().size());
   if (memcmp(tdata,ptable->iptr(hrow),ptable->psize(hrow)) != 0) {
-    reply=QMessageBox::warning(this,"Запись раздела","Содержимое раздела изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
+    reply=QMessageBox::warning(this,"Enregistrement de section","Le contenu раздела изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
     if (reply == QMessageBox::Ok) ptable->replace(hrow,(uint8_t*)tdata,ptable->psize(hrow));
   }
   delete [] tdata;
@@ -692,7 +692,7 @@ if (hexedit != 0) {
   hexcup=hexedit->dhex->data();
   memcpy(tdata,hexcup.data(),ptable->psize(hrow));
   if (memcmp(tdata,ptable->iptr(hrow),ptable->psize(hrow)) != 0) {
-    reply=QMessageBox::warning(this,"Запись раздела","Содержимое раздела изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
+    reply=QMessageBox::warning(this,"Enregistrement de section","Le contenu раздела изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
     if (reply == QMessageBox::Ok) ptable->replace(hrow,(uint8_t*)tdata,ptable->psize(hrow));
   }
   delete [] tdata;
@@ -719,7 +719,7 @@ Version_input->setReadOnly(0);
 void MainWindow::Start_Flasher() {
 
 if (PortSelector->count() == 0) {
-   QMessageBox::critical(0,"Ошибка","Не найдены последовательне порты");
+   QMessageBox::critical(0,"Erreur","Aucun port série trouvé");
    return;
 }
   
@@ -727,18 +727,18 @@ flasher();
 }
 
 //********************************************
-//  Перезагрузка модема
+//  Redémarrer le modem
 //********************************************
 void MainWindow::Reboot_modem() {
 
 if (PortSelector->count() == 0) {
-   QMessageBox::critical(0,"Ошибка","Не найдены последовательне порты");
+   QMessageBox::critical(0,"Erreur","Aucun port série trouvé");
    return;
 }
 open_port();
 modem_reboot();  
 close_port();
-QMessageBox::information(0,"ОK","Команда перезагрузки передана в модем");
+QMessageBox::information(0,"ОK","La commande de redémarrage est transférée au modem.");
 }
 
 
@@ -749,7 +749,7 @@ void MainWindow::usbdload() {
 
  
 if (PortSelector->count() == 0) {
-   QMessageBox::critical(0,"Ошибка","Не найдены последовательне порты");
+   QMessageBox::critical(0,"Erreur","Aucun port série trouvé");
    return;
 }
 usbload();
@@ -789,9 +789,9 @@ MainWindow* mwin;
 
 QCommandLineParser parser;
 
-parser.setApplicationDescription("Программа для прошивки и восстановления устройств на чипсете Hisilicon Balong v7");
+parser.setApplicationDescription("Le programme de clignotement et de restauration de périphériques sur le chipset Hisilicon Balong v7");
 parser.addHelpOption();
-parser.addPositionalArgument("firmware", "Файл прошивки");
+parser.addPositionalArgument("firmware", "Fichier de firmware");
 
 parser.process(app);    
 QStringList args = parser.positionalArguments();

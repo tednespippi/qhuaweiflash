@@ -20,7 +20,7 @@ int i;
 for (i=0;i<(int)nvhd.file_num;i++) {
   if (flist[i].id == (uint32_t)fid) return flist[i].offset;
 }
-printf("\n - Ошибка структуры файла - компоненты #%i не существует\n",fid);
+printf("\ n - Erreur de structure de fichier - les composants #% i n’existent pas \ n",fid);
 exit(1);
 }
 
@@ -92,7 +92,7 @@ else return b;
 }
 
 //**********************************************
-//* Загрузка ячейки в буфер
+//* Chargement ячейки в буфер
 //**********************************************
 int nvexplorer::load_item(int item, char* buf) {
   

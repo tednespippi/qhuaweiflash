@@ -31,7 +31,7 @@ pdata=new uint8_t[plen];
 memcpy(pdata,fileptr->fdata(),plen);
 
 // заголовок окна
-title="HEX-Просмотр - ";
+title="HEX-Voir -";
 title.append(fileptr->fname());
 setWindowTitle(title);
 
@@ -39,7 +39,7 @@ setWindowTitle(title);
 menubar = new QMenuBar(this);
 setMenuBar(menubar);
 
-menu_file = new QMenu("Файл",menubar);
+menu_file = new QMenu("Fichier",menubar);
 menubar->addAction(menu_file->menuAction());
 
 // Статусбар
@@ -51,9 +51,9 @@ central=new QWidget(this);
 setCentralWidget(central);
 
 // пункты меню
-menu_file->addAction(QIcon::fromTheme("document-save"),"Сохранить",this,SLOT(save_all()),QKeySequence::Save);
+menu_file->addAction(QIcon::fromTheme("document-save"),"Enregistrer",this,SLOT(save_all()),QKeySequence::Save);
 menu_file->addSeparator();
-menu_file->addAction("Выход",this,SLOT(close()),QKeySequence("Esc"));
+menu_file->addAction("Sortie",this,SLOT(close()),QKeySequence("Esc"));
 
 // основной компоновщик
 vlm=new QVBoxLayout(central);
@@ -81,7 +81,7 @@ config->setValue("/config/HexFileEditorRect",rect);
 
 // признак изменения данных
 if (datachanged) {
-  reply=QMessageBox::warning(this,"Запись файла","Содержимое файла изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
+  reply=QMessageBox::warning(this,"Écrire le fichier","Le contenu файла изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
   if (reply == QMessageBox::Ok) {
     // сохранение данных
     save_all();

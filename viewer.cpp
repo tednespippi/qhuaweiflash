@@ -42,8 +42,8 @@ else memcpy(pdata,srcdata,plen);
 pdata[plen]=0; 
 
 // заголовок окна
-if (readonly) title="Просмотр - ";
-else title="Редактирование - ";
+if (readonly) title="Voir -";
+else title="Montage -";
 title.append(fname);
 setWindowTitle(title);
 
@@ -51,13 +51,13 @@ setWindowTitle(title);
 menubar = new QMenuBar(this);
 setMenuBar(menubar);
 
-menu_file = new QMenu("Файл",menubar);
+menu_file = new QMenu("Fichier",menubar);
 menubar->addAction(menu_file->menuAction());
 
-menu_edit = new QMenu("Правка",menubar);
+menu_edit = new QMenu("Éditer",menubar);
 menubar->addAction(menu_edit->menuAction());
 
-menu_view = new QMenu("Вид",menubar);
+menu_view = new QMenu("Voir",menubar);
 menubar->addAction(menu_view->menuAction());
 
 
@@ -86,40 +86,40 @@ textdata=(char*)pdata;
 ted->append(textdata);
 
 // пункты меню
-menu_file->addAction(QIcon::fromTheme("document-save"),"Сохранить",this,SLOT(save_all()),QKeySequence::Save);
-toolbar->addAction(QIcon::fromTheme("document-save"),"Сохранить",this,SLOT(save_all()));
+menu_file->addAction(QIcon::fromTheme("document-save"),"Enregistrer",this,SLOT(save_all()),QKeySequence::Save);
+toolbar->addAction(QIcon::fromTheme("document-save"),"Enregistrer",this,SLOT(save_all()));
 menu_file->addSeparator();
-menu_file->addAction("Выход",this,SLOT(close()),QKeySequence("Esc"));
+menu_file->addAction("Sortie",this,SLOT(close()),QKeySequence("Esc"));
 
 toolbar->addSeparator();
 
 if (!readonly) {
-  menu_edit->addAction(QIcon::fromTheme("edit-undo"),"Отменить",ted,SLOT(undo()),QKeySequence::Undo);
-  toolbar->addAction(QIcon::fromTheme("edit-undo"),"Отменить",ted,SLOT(undo()));
-  menu_edit->addAction(QIcon::fromTheme("edit-redo"),"Повторить",ted,SLOT(redo()),QKeySequence::Redo);
-  toolbar->addAction(QIcon::fromTheme("edit-redo"),"Повторить",ted,SLOT(redo()));
+  menu_edit->addAction(QIcon::fromTheme("edit-undo"),"Annuler",ted,SLOT(undo()),QKeySequence::Undo);
+  toolbar->addAction(QIcon::fromTheme("edit-undo"),"Annuler",ted,SLOT(undo()));
+  menu_edit->addAction(QIcon::fromTheme("edit-redo"),"Répéter",ted,SLOT(redo()),QKeySequence::Redo);
+  toolbar->addAction(QIcon::fromTheme("edit-redo"),"Répéter",ted,SLOT(redo()));
   menu_edit->addSeparator();
-  menu_edit->addAction(QIcon::fromTheme("edit-cut"),"Вырезать",ted,SLOT(cut()),QKeySequence::Cut);
-  toolbar->addAction(QIcon::fromTheme("edit-cut"),"Вырезать",ted,SLOT(cut()));
+  menu_edit->addAction(QIcon::fromTheme("edit-cut"),"Découper",ted,SLOT(cut()),QKeySequence::Cut);
+  toolbar->addAction(QIcon::fromTheme("edit-cut"),"Découper",ted,SLOT(cut()));
 }
-menu_edit->addAction(QIcon::fromTheme("edit-copy"),"Копировать",ted,SLOT(copy()),QKeySequence::Copy);
-toolbar->addAction(QIcon::fromTheme("edit-copy"),"Копировать",ted,SLOT(copy()));
+menu_edit->addAction(QIcon::fromTheme("edit-copy"),"Copie",ted,SLOT(copy()),QKeySequence::Copy);
+toolbar->addAction(QIcon::fromTheme("edit-copy"),"Copie",ted,SLOT(copy()));
 
 if (!readonly) {
-  menu_edit->addAction(QIcon::fromTheme("edit-paste"),"Вставить",ted,SLOT(paste()),QKeySequence::Paste);
-  toolbar->addAction(QIcon::fromTheme("edit-paste"),"Вставить",ted,SLOT(paste()));
+  menu_edit->addAction(QIcon::fromTheme("edit-paste"),"Insérer",ted,SLOT(paste()),QKeySequence::Paste);
+  toolbar->addAction(QIcon::fromTheme("edit-paste"),"Insérer",ted,SLOT(paste()));
   toolbar->addSeparator();
 }
-menu_edit->addAction(QIcon::fromTheme("edit-find"),"Найти...",this,SLOT(find()),QKeySequence::Find);
-toolbar->addAction(QIcon::fromTheme("edit-find"),"Найти...",this,SLOT(find()));
-menu_edit->addAction(QIcon::fromTheme("edit-find"),"Найти далее",this,SLOT(findnext()),QKeySequence::FindNext);
+menu_edit->addAction(QIcon::fromTheme("edit-find"),"Trouver ...",this,SLOT(find()),QKeySequence::Find);
+toolbar->addAction(QIcon::fromTheme("edit-find"),"Trouver ...",this,SLOT(find()));
+menu_edit->addAction(QIcon::fromTheme("edit-find"),"Trouver plus loin",this,SLOT(findnext()),QKeySequence::FindNext);
 
 
-menu_view->addAction(QIcon::fromTheme("zoom-in"),"Увеличить шрифт",ted,SLOT(zoomIn()),QKeySequence("Ctrl++"));
-toolbar->addAction(QIcon::fromTheme("zoom-in"),"Увеличить шрифт",ted,SLOT(zoomIn()));
-menu_view->addAction(QIcon::fromTheme("zoom-out"),"Уменьшить шрифт",ted,SLOT(zoomOut()),QKeySequence("Ctrl+-"));
-toolbar->addAction(QIcon::fromTheme("zoom-out"),"Уменьшить шрифт",ted,SLOT(zoomOut()));
-menu_view->addAction(QIcon::fromTheme("preferences-desktop-font"),"Шрифт...",this,SLOT(fontselector()));
+menu_view->addAction(QIcon::fromTheme("zoom-in"),"Augmenter la police",ted,SLOT(zoomIn()),QKeySequence("Ctrl++"));
+toolbar->addAction(QIcon::fromTheme("zoom-in"),"Augmenter la police",ted,SLOT(zoomIn()));
+menu_view->addAction(QIcon::fromTheme("zoom-out"),"Réduire la taille de la police",ted,SLOT(zoomOut()),QKeySequence("Ctrl+-"));
+toolbar->addAction(QIcon::fromTheme("zoom-out"),"Réduire la taille de la police",ted,SLOT(zoomOut()));
+menu_view->addAction(QIcon::fromTheme("preferences-desktop-font"),"Police ...",this,SLOT(fontselector()));
 
 // слот модификации
 connect(ted,SIGNAL(textChanged()),this,SLOT(setChanged()));
@@ -146,7 +146,7 @@ config->setValue("/config/EditorRect",rect);
 
 // признак изменения данных
 if (datachanged) {
-  reply=QMessageBox::warning(this,"Запись файла","Содержимое файла изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
+  reply=QMessageBox::warning(this,"Écrire le fichier","Le contenu файла изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
   if (reply == QMessageBox::Ok) {
     // сохранение данных
     save_all();
@@ -217,7 +217,7 @@ int res;
 if (findtext.size() == 0) return;
   res=ted->find(findtext);
   if (!res) {
-    QMessageBox::information(0,"Информация","Текст не найден");
+    QMessageBox::information(0,"Les informations","Texte non trouvé");
   } 
 }  
 

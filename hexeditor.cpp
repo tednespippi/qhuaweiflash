@@ -32,7 +32,7 @@ dhex->setOverwriteMode(true);
 dhex->setHexCaps(true);
 dhex->setHighlighting(true);
 
-// Загрузка данных в редактор
+// Chargement данных в редактор
 hexcup.setRawData(data,len);
 dhex->setData(hexcup);
 
@@ -45,18 +45,18 @@ lm=new QVBoxLayout(this);
 lm->addWidget(dhex);
 
 // меню редактора
-menu_edit = new QMenu("HEX-Редактор",menubar);
+menu_edit = new QMenu("Éditeur HEX",menubar);
 menubar->addMenu(menu_edit);
 
 // меню undo-redo
-menu_undo=menu_edit->addAction("Отмена",dhex,SLOT(undo()),QKeySequence::Undo);
-menu_redo=menu_edit->addAction("Повтор",dhex,SLOT(redo()),QKeySequence::Redo);
+menu_undo=menu_edit->addAction("Annuler",dhex,SLOT(undo()),QKeySequence::Undo);
+menu_redo=menu_edit->addAction("Rejouer",dhex,SLOT(redo()),QKeySequence::Redo);
 // Увеличение-Уменьшение шрифта
-menu_enlarge_font=menu_edit->addAction("Увеличить шрифт",this,SLOT(EnlargeFont()),QKeySequence("Ctrl++"));
-menu_reduce_font=menu_edit->addAction("Уменьшить шрифт",this,SLOT(ReduceFont()),QKeySequence("Ctrl+-"));
+menu_enlarge_font=menu_edit->addAction("Augmenter la police",this,SLOT(EnlargeFont()),QKeySequence("Ctrl++"));
+menu_reduce_font=menu_edit->addAction("Réduire la taille de la police",this,SLOT(ReduceFont()),QKeySequence("Ctrl+-"));
 
 // подменю выбора ширины hex-редактора
-hwidth = new QMenu("Байт в строке",this);
+hwidth = new QMenu("Octet en ligne",this);
 wsel=new QActionGroup(hwidth);
 wsel->setExclusive(true);
 w16=hwidth->addAction("16");
@@ -101,7 +101,7 @@ switch(bpl) {
 dhex->setBytesPerLine(bpl);
 menu_edit->addMenu(hwidth);
 
-menu_ro=menu_edit->addAction("Только чтение",this,SLOT(ROswitch()),QKeySequence("Ctrl+e"));
+menu_ro=menu_edit->addAction("Lecture seule",this,SLOT(ROswitch()),QKeySequence("Ctrl+e"));
 menu_ro->setCheckable(true);
 menu_ro->setChecked(true);
 
@@ -156,7 +156,7 @@ QByteArray data;
 
 data=dhex->dataAt(adr,1);
 
-adrstr.sprintf("Позиция: %06llX   Байт:%02X",adr,(uint8_t)data.at(0));
+adrstr.sprintf("Position:% 06llX Octet:% 02X",adr,(uint8_t)data.at(0));
 status_adr_info->setText(adrstr);   
 }
     
