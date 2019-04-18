@@ -264,7 +264,7 @@ uint32_t size;
 QString filename;
 
 setup_adr(type,&start,&size,&filename);
-filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*.*)");
+filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*)");
 if (filename.isEmpty()) return;
 
 QFile out(filename,this);
@@ -307,7 +307,7 @@ r1size=(hdr->ramdisk_size+pagesize-1)/pagesize*pagesize;
 r2size=(hdr->second_size+pagesize-1)/pagesize*pagesize;
 
 // выбор файла
-filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*.*)");
+filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*)");
 if (filename.isEmpty()) return;
 
 QFile out(filename,this);

@@ -357,7 +357,7 @@ if (((fd->fmode()) & C_ISREG) == 0) {
 
 QString fn=fd->cfname();
 
-fn=QFileDialog::getSaveFileName(this,"Enregistrer le fichier",fn,"All files (*.*)");
+fn=QFileDialog::getSaveFileName(this,"Enregistrer le fichier",fn,"All files (*)");
 if (fn.isEmpty()) return;
 out=fopen(fn.toLocal8Bit().data(),"w");
 fwrite(fd->fdata(),1,fd->fsize(),out);
@@ -381,7 +381,7 @@ if (((fd->fmode()) & C_ISREG) == 0) {
   return;
 }
 
-fn=QFileDialog::getOpenFileName(this,"Remplacement de fichier",fn,"All files (*.*)");
+fn=QFileDialog::getOpenFileName(this,"Remplacement de fichier",fn,"All files (*)");
 if (fn.isEmpty()) return;
 
 QFile in(fn,this);
@@ -515,7 +515,7 @@ memset(&hdr,'0',sizeof(hdr));
 memcpy(hdr.c_magic,"070701",6);
 memcpy(hdr.c_mode,"000081B4",8);
 
-fn=QFileDialog::getOpenFileName(this,"Ajouter un nouveau fichier",fn,"All files (*.*)");
+fn=QFileDialog::getOpenFileName(this,"Ajouter un nouveau fichier",fn,"All files (*)");
 if (fn.isEmpty()) return;
 
 QFile in(fn,this);

@@ -136,7 +136,7 @@ return 1;
 void usbldialog::browse() {
 
 QString name;  
-name=QFileDialog::getOpenFileName(this,"Sélectionnez le fichier d'amorçage",".","usbloader (*.bin);;All files (*.*)");
+name=QFileDialog::getOpenFileName(this,"Sélectionnez le fichier d'amorçage",".","usbloader (*.bin);;All files (*)");
 fname->setText(name);
 }
 
@@ -146,7 +146,7 @@ fname->setText(name);
 void usbldialog::ptbrowse() {
 
 QString name;  
-name=QFileDialog::getOpenFileName(this,"Sélection d'un fichier de table de partition",".","usbloader (*.bin);;All files (*.*)");
+name=QFileDialog::getOpenFileName(this,"Sélection d'un fichier de table de partition",".","usbloader (*.bin);;All files (*)");
 ptfname->setText(name);
 }
 

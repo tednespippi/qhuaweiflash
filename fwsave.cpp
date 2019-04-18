@@ -30,7 +30,7 @@ if (newname || fwfilename.isEmpty())  {
   // выбираем новое имя файла
   QString fn=fwfilename;
 
-  fn=QFileDialog::getSaveFileName(0,"Prénom файла",fn,"firmware (*.fw);;All files (*.*)");
+  fn=QFileDialog::getSaveFileName(0,"Prénom файла",fn,"firmware (*.fw);;All files (*)");
   if (fn.isEmpty()) return;
   fwfilename=fn;  
 }

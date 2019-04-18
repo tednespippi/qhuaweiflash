@@ -283,7 +283,7 @@ switch(type) {
     break;
 }   
 
-filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*.*)");
+filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*)");
 if (filename.isEmpty()) return;
 
 QFile out(filename,this);
@@ -318,7 +318,7 @@ QString filename="";
 uint32_t fsize;
 
 // выбор файла
-filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*.*)");
+filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*)");
 if (filename.isEmpty()) return;
 
 QFile out(filename,this);

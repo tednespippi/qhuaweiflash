@@ -417,7 +417,7 @@ QString filename;
 
 int row=nvtable->currentRow();
 filename.sprintf("nvitem-%05i.bin",itemlist[row].id);
-filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*.*)");
+filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*)");
 if (filename.isEmpty()) return;
   
 QFile out(filename,this);
@@ -439,7 +439,7 @@ QString str;
 
 int row=nvtable->currentRow();
 filename.sprintf("nvitem-%05i.bin",itemlist[row].id);
-filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*.*)");
+filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*)");
 if (filename.isEmpty()) return;
   
 QFile in(filename,this);
