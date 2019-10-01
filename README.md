@@ -1,24 +1,21 @@
 # qhuaweiflash
-Utilitaire graphique pour flasher les modems et les routeurs de HUAWEI et éditer les fichiers de firmware
+Graphical utility for flashing HUAWEI modems and routers and editing firmware files
 
-Cet utilitaire est destiné à:
+This utility is intended for:
 
-- Firmwares des modems huawei, supportant le protocole de firmware, similaires à ceux utilisés dans les modems sur Balong V7. Y compris le travail à part entière mis en œuvre avec les signatures numériques du micrologiciel.
-- Édition des images du firmware. Vous pouvez afficher, ajouter, supprimer, modifier des sections individuelles, modifier les en-têtes de section.
-Édition implémentée des images de partition en code HEX et, partiellement, en mode formaté (si la section a un format significatif).
-- Démarrez l’usbloader des chargeurs de modem à l’aide de correctifs.
+   - Firmwares of huawei modems, supporting the firmware protocol, similar to those used in modems on Balong V7. Including the full-fledged work implemented with the digital signatures of the firmware.
+   - Editing the firmware images. You can view, add, delete, edit individual sections, edit section headers. Implemented editing of partition images in HEX code and, partially, in formatted mode (if the section has a meaningful format).
+   - Start the usbloader of the modem loaders using patches.
 
-L'utilitaire est construit sur le package graphique Qt et constitue la version Windows des utilitaires balong_flash, balong-usbload, ainsi que l'éditeur de microprogramme.
+The utility is built on the Qt graphics package and a Windows version of the balong_flash, balong-usbload utilities, as well as the firmware editor.
 
-Dépendances :
+Dependencies:
 
-apt-get install qt5-qmake qtbase5-dev zlib1g-dev
+    apt-get install qt5-qmake qtbase5-dev zlib1g-dev
 
+To assemble this utility, use the commands:
 
-Pour assembler cet utilitaire, utilisez les commandes:
-
-export QT_SELECT=qt5
-
-qmake
-
-make
+    qmake 
+    make qhuaweiflash 
+    qmake 
+    make 
