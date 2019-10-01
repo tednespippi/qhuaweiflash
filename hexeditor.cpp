@@ -156,7 +156,7 @@ QByteArray data;
 
 data=dhex->dataAt(adr,1);
 
-adrstr.sprintf("Position:% 06llX Octet:% 02X",adr,(uint8_t)data.at(0));
+adrstr.sprintf("Position:% 06llX Byte:% 02X",adr,(uint8_t)data.at(0));
 status_adr_info->setText(adrstr);   
 }
     

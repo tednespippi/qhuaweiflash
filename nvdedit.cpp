@@ -144,24 +144,24 @@ lcomp->addWidget(size3,4,1,Qt::AlignHCenter);
 
 
 // кнопки извлечения 
-extr1=new QPushButton("Exit",this);
+extr1=new QPushButton("Extract",this);
 connect(extr1,SIGNAL(clicked()),this,SLOT(extract1()));
 lcomp->addWidget(extr1,1,2);
 
 if (hdr.xnv_xml.len != 0) {
- extr2=new QPushButton("Exit",this);
+ extr2=new QPushButton("Extract",this);
  connect(extr2,SIGNAL(clicked()),this,SLOT(extract2()));
  lcomp->addWidget(extr2,2,2);
 }
 
 if (hdr.cust_xml.len != 0) {
- extr3=new QPushButton("Exit",this);
+ extr3=new QPushButton("Extract",this);
  connect(extr3,SIGNAL(clicked()),this,SLOT(extract3()));
  lcomp->addWidget(extr3,3,2);
 }
 
 if (hdr.xnv_map.len != 0) {
- extr4=new QPushButton("Exit",this);
+ extr4=new QPushButton("Extract",this);
  connect(extr4,SIGNAL(clicked()),this,SLOT(extract4()));
  lcomp->addWidget(extr4,4,2);
 }
