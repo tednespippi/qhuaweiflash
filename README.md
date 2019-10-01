@@ -1,4 +1,6 @@
 # qhuaweiflash
+![image](https://user-images.githubusercontent.com/36906814/65954875-7c5a9e00-e479-11e9-8890-e6124fed56a5.png)
+
 Graphical utility for flashing HUAWEI modems and routers and editing firmware files
 
 This utility is intended for:
