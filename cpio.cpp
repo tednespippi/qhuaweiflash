@@ -43,11 +43,11 @@ menubar->addAction(menu_edit->menuAction());
 // Пункты меню редактора
 menu_edit->addAction(QIcon::fromTheme("monter"), "Go up one level", this, SLOT(go_up()), QKeySequence("Backspace"));
 menu_edit->addAction(QIcon::fromTheme("document-save"), "Extract file", this, SLOT(extract_file()), QKeySequence("F11"));
-menu_edit->addAction(QIcon::fromTheme("object-flip-vertical"), "Remplacer файл", this, SLOT(replace_file()), 0);
+menu_edit->addAction(QIcon::fromTheme("object-flip-vertical"), "Replace file", this, SLOT(replace_file()), 0);
 menu_edit->addAction(QIcon::fromTheme("edit-delete"), "Delete file", this, SLOT(delete_file()), QKeySequence("Del"));
 menu_edit->addAction(QIcon(":/icon_hex.png"), "Viewer / HEX Editor", this, SLOT(hexedit_file()), QKeySequence("F2"));
-menu_edit->addAction(QIcon(":/icon_view.png"), "Text view", this, SLOT(view_file()), QKeySequence("F3"));
-menu_edit->addAction(QIcon(":/icon_edit.png"), "Text editor", this, SLOT(edit_file()), QKeySequence("F4"));
+menu_edit->addAction(QIcon(":/icon_view.png"), "View file", this, SLOT(view_file()), QKeySequence("F3"));
+menu_edit->addAction(QIcon(":/icon_edit.png"), "Edit file", this, SLOT(edit_file()), QKeySequence("F4"));
 menu_edit->addAction(QIcon::fromTheme("list-add"), "Add a new file", this, SLOT(add_file()), QKeySequence("+"));
 menu_edit->addSeparator();
 menu_edit->addAction(QIcon::fromTheme("file-save"), "Save Changes", this, SLOT(saveall()), QKeySequence("Ctrl+S"));
@@ -55,11 +55,11 @@ menu_edit->addAction(QIcon::fromTheme("file-save"), "Save Changes", this, SLOT(s
 // Пункты тулбара
 toolbar->addAction(QIcon::fromTheme("monter"), "Go up one level", this, SLOT(go_up()));
 toolbar->addAction(QIcon::fromTheme("document-save"), "Extract file", this, SLOT(extract_file()));
-toolbar->addAction(QIcon::fromTheme("object-flip-vertical"), "Remplacer файл", this, SLOT(replace_file()));
+toolbar->addAction(QIcon::fromTheme("object-flip-vertical"), "Replace file", this, SLOT(replace_file()));
 toolbar->addAction(QIcon::fromTheme("edit-delete"), "Delete file", this, SLOT(delete_file()));
 toolbar->addAction(QIcon(":/icon_hex.png"), "Viewer / HEX Editor", this, SLOT(hexedit_file()));
-toolbar->addAction(QIcon(":/icon_view.png"), "Text view", this, SLOT(view_file()));
-toolbar->addAction(QIcon(":/icon_edit.png"), "Text editor", this, SLOT(edit_file()));
+toolbar->addAction(QIcon(":/icon_view.png"), "View file", this, SLOT(view_file()));
+toolbar->addAction(QIcon(":/icon_edit.png"), "Edit file", this, SLOT(edit_file()));
 toolbar->addSeparator();
 toolbar->addAction(QIcon::fromTheme("list-add"), "Add a new file", this, SLOT(add_file()));
 toolbar->setEnabled(false);
