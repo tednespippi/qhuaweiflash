@@ -155,15 +155,15 @@ r2addr->setFont(labelfont);
 lcomp->addWidget(r2addr,3,1,Qt::AlignHCenter);
 
 // кнопки извлечения
-kext=new QPushButton("Exit",this);
+kext=new QPushButton("Extract",this);
 connect(kext,SIGNAL(clicked()),this,SLOT(kextract()));
 lcomp->addWidget(kext,1,2);
 
-r1ext=new QPushButton("Exit",this);
+r1ext=new QPushButton("Extract",this);
 connect(r1ext,SIGNAL(clicked()),this,SLOT(r1extract()));
 lcomp->addWidget(r1ext,2,2);
 
-r2ext=new QPushButton("Exit",this);
+r2ext=new QPushButton("Extract",this);
 connect(r2ext,SIGNAL(clicked()),this,SLOT(r2extract()));
 lcomp->addWidget(r2ext,3,2);
 
