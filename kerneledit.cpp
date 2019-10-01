@@ -49,7 +49,7 @@ vlm->addWidget(hdrlabel,0,Qt::AlignHCenter);
 font=oldfont;
 font.setPointSize(font.pointSize()+5);
 font.setBold(true);
-parmlabel=new QLabel("Options du noyau",this);
+parmlabel=new QLabel("Kernel Options",this);
 parmlabel->setFont(font);
 parmlabel->setStyleSheet("QLabel { color : blue; }");
 vlm->addWidget(parmlabel);
@@ -68,7 +68,7 @@ str.sprintf("%i",hdr->page_size);
 pgslabel=new QLabel(str,this);
 pgslabel->setFont(labelfont);
 // pgslabel->setFont(labelfont);
-flm->addRow("La taille страницы",pgslabel);
+flm->addRow("Size of pages",pgslabel);
 flm->labelForField(pgslabel)->setFont(labelfont);
 
 // physical addr for kernel tags
@@ -95,7 +95,7 @@ flm->labelForField(dtlabel)->setFont(labelfont);
 strncpy(cline,(char*)hdr->cmdline,BOOT_ARGS_SIZE);
 str=cline;
 cmdline=new QLineEdit(str,this);
-flm->addRow("Options de démarrage",cmdline);
+flm->addRow("Startup options",cmdline);
 flm->labelForField(cmdline)->setFont(labelfont);
 
 vlm->addStretch(1);
@@ -110,17 +110,17 @@ font=oldfont;
 font.setPointSize(font.pointSize()+3);
 font.setBold(true);
 
-comphdr1=new QLabel("Prénom компонента",this);
+comphdr1=new QLabel("Component name",this);
 comphdr1->setFont(font);
 comphdr1->setStyleSheet("QLabel { color : red; }");
 lcomp->addWidget(comphdr1,0,0);
 
-comphdr2=new QLabel("Adresse de téléchargement",this);
+comphdr2=new QLabel("Download address",this);
 comphdr2->setFont(font);
 comphdr2->setStyleSheet("QLabel { color : orange; }");
 lcomp->addWidget(comphdr2,0,1);
 
-comphdr3=new QLabel("Les équipes",this);
+comphdr3=new QLabel("The teams",this);
 comphdr3->setFont(font);
 comphdr3->setStyleSheet("QLabel { color : green; }");
 lcomp->addWidget(comphdr3,0,2,1,2,Qt::AlignHCenter);
@@ -155,28 +155,28 @@ r2addr->setFont(labelfont);
 lcomp->addWidget(r2addr,3,1,Qt::AlignHCenter);
 
 // кнопки извлечения
-kext=new QPushButton("Sortir",this);
+kext=new QPushButton("Exit",this);
 connect(kext,SIGNAL(clicked()),this,SLOT(kextract()));
 lcomp->addWidget(kext,1,2);
 
-r1ext=new QPushButton("Sortir",this);
+r1ext=new QPushButton("Exit",this);
 connect(r1ext,SIGNAL(clicked()),this,SLOT(r1extract()));
 lcomp->addWidget(r1ext,2,2);
 
-r2ext=new QPushButton("Sortir",this);
+r2ext=new QPushButton("Exit",this);
 connect(r2ext,SIGNAL(clicked()),this,SLOT(r2extract()));
 lcomp->addWidget(r2ext,3,2);
 
 // кнопки замены
-krepl=new QPushButton("Remplacer",this);
+krepl=new QPushButton("Replace",this);
 connect(krepl,SIGNAL(clicked()),this,SLOT(kreplace()));
 lcomp->addWidget(krepl,1,3);
 
-r1repl=new QPushButton("Remplacer",this);
+r1repl=new QPushButton("Replace",this);
 connect(r1repl,SIGNAL(clicked()),this,SLOT(r1replace()));
 lcomp->addWidget(r1repl,2,3);
 
-r2repl=new QPushButton("Remplacer",this);
+r2repl=new QPushButton("Replace",this);
 connect(r2repl,SIGNAL(clicked()),this,SLOT(r2replace()));
 lcomp->addWidget(r2repl,3,3);
 
@@ -204,7 +204,7 @@ if (cmdline->isModified()) {
 
 // проверяем, изменились ли данные
 if ((ptable->psize(pnum) != (plen+128)) || (memcmp(localdata,ptable->iptr(pnum),plen+128) != 0)) {
-  reply=QMessageBox::warning(this,"Enregistrement de section","Le contenu раздела изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
+  reply=QMessageBox::warning(this,"Section recording ", " Content partition changed, save?",QMessageBox::Ok | QMessageBox::Cancel);
   if (reply == QMessageBox::Ok) {
     ptable->replace(pnum,localdata,plen+128);
   }
@@ -264,12 +264,12 @@ uint32_t size;
 QString filename;
 
 setup_adr(type,&start,&size,&filename);
-filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*)");
+filename=QFileDialog::getSaveFileName(this,"Stored name",filename,"All files (*)");
 if (filename.isEmpty()) return;
 
 QFile out(filename,this);
 if (!out.open(QIODevice::WriteOnly)) {
-    QMessageBox::critical(0,"Erreur","Erreur lors de la création du fichier");
+    QMessageBox::critical(0, "Error", "Error while creating file");
     return;
 }
 out.write((char*)(localdata+128+start),size);
@@ -307,12 +307,12 @@ r1size=(hdr->ramdisk_size+pagesize-1)/pagesize*pagesize;
 r2size=(hdr->second_size+pagesize-1)/pagesize*pagesize;
 
 // выбор файла
-filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*)");
+filename=QFileDialog::getOpenFileName(this,"File name",filename,"All files (*)");
 if (filename.isEmpty()) return;
 
 QFile out(filename,this);
 if (!out.open(QIODevice::ReadOnly)) {
-    QMessageBox::critical(0,"Erreur","Erreur de lecture du fichier");
+    QMessageBox::critical(0, "Error", "Error reading file");
     return;
 }
 

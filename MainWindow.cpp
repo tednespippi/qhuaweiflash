@@ -48,7 +48,7 @@ centralwidget->setStretchFactor(0,1);
 vlhdr=new QVBoxLayout(hdrpanel);
 
 // параметры прошивки
-hdlbl3=new QLabel("Options de fichier");
+hdlbl3=new QLabel("File options");
 hdlbl3->setFont(font);
 vlhdr->addWidget(hdlbl3);
 
@@ -57,9 +57,9 @@ vlhdr->addLayout(lfparm);
 
 // тип файла прошивки
 dload_id_selector=new QComboBox(centralwidget);
-lfparm->addRow("Type de fichier",dload_id_selector);
+lfparm->addRow("File type",dload_id_selector);
 // флаг сжатия
-zflag_selector=new QCheckBox("sections de compression zlib",centralwidget);
+zflag_selector=new QCheckBox("zlib compression sections",centralwidget);
 vlhdr->addWidget(zflag_selector);
 // наполняем список кодов прошивки
 for(i=0;i<8;i++) {
@@ -68,14 +68,14 @@ for(i=0;i<8;i++) {
 dload_id_selector->setCurrentIndex(0);
 
 // Liste des sections
-hdlbl1=new QLabel("Liste des sections",hdrpanel);
+hdlbl1=new QLabel("List of sections",hdrpanel);
 hdlbl1->setFont(font);
 vlhdr->addWidget(hdlbl1);
 
 partlist = new QListWidget(hdrpanel);
 vlhdr->addWidget(partlist);
 
-hdlbl2=new QLabel("Titre de la section",hdrpanel);
+hdlbl2=new QLabel("Title of the section",hdrpanel);
 hdlbl2->setFont(font);
 vlhdr->addWidget(hdlbl2);
 
@@ -87,13 +87,13 @@ pcode = new QLineEdit(hdrpanel);
 pcode->setMaxLength(4);
 pcode->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 pcode->setReadOnly(true);
-lphdr->addRow("Code de section",pcode);
+lphdr->addRow("Section Code",pcode);
 
 Platform_input = new QLineEdit(hdrpanel);
 Platform_input->setMaxLength(8);
 Platform_input->setReadOnly(true);
 Platform_input->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-lphdr->addRow("Plate-forme",Platform_input);
+lphdr->addRow("Platform",Platform_input);
 
 Date_input = new QLineEdit(hdrpanel);
 Date_input->setMaxLength(16);
@@ -105,13 +105,13 @@ Time_input = new QLineEdit(hdrpanel);
 Time_input->setMaxLength(16);
 Time_input->setReadOnly(true);
 Time_input->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-lphdr->addRow("Le temps",Time_input);
+lphdr->addRow("Time",Time_input);
 
 setdate = new QToolButton(hdrpanel);
-setdate->setText("Définir la date actuelle");
+setdate->setText("Set the current date ");
 vlhdr->addWidget(setdate);
 
-vlhdr->addWidget(new QLabel("Version du firmware",hdrpanel));
+vlhdr->addWidget(new QLabel("Firmware Version",hdrpanel));
 
 QSize qs=Time_input->sizeHint();
 qs.rwidth() *=2;
@@ -130,14 +130,14 @@ EditorLayout=new QVBoxLayout(edpanel);
 
 // Кнопки сырой-форматный
 laymode=new QHBoxLayout(0);
-modebuttons = new QGroupBox("Mode d'affichage");
+modebuttons = new QGroupBox("Display mode");
 // modebuttons->setFrameStyle(QFrame::Panel | QFrame::Sunken);
 modebuttons->setFlat(false);
 
 dump_mode = new QRadioButton("HEX-Dump");
 laymode->addWidget(dump_mode);
 
-structure_mode = new QRadioButton("Formaté");
+structure_mode = new QRadioButton("Formatted");
 structure_mode->setChecked(true);
 laymode->addWidget(structure_mode);
 
@@ -171,35 +171,35 @@ centralwidget->restoreState(config->value("/config/splitter").toByteArray());
 
 // Главное меню
 menubar = new QMenuBar(this);
-menu_file = new QMenu("Fichier",menubar);
+menu_file = new QMenu("File",menubar);
 menubar->addAction(menu_file->menuAction());
 
 menu_part = new QMenu("Section",menubar);
 menu_part->setEnabled(true);
 menubar->addAction(menu_part->menuAction());
 
-menu_oper = new QMenu("Opérations",menubar);
+menu_oper = new QMenu("Operations",menubar);
 menu_oper->setEnabled(true);
 menubar->addAction(menu_oper->menuAction());
 
 setMenuBar(menubar);
 
 // Обработчики главного меню
-fileopen = new QAction("Ouvert",this);
+fileopen = new QAction("Open",this);
 fileopen->setShortcut(QKeySequence::Open);
 menu_file->addAction(fileopen);
 
-fileappend = new QAction("Ajouter",this);
+fileappend = new QAction("Add",this);
 fileappend->setEnabled(false);
 menu_file->addAction(fileappend);
 menu_file->addSeparator();
 
-filesave = new QAction("Enregistrer",this);
+filesave = new QAction("Save",this);
 filesave->setEnabled(false);
 filesave->setShortcut(QKeySequence::Save);
 menu_file->addAction(filesave);
 
-menu_file->addAction("Enregistrer sous...",this,SLOT(save_as()));
+menu_file->addAction("Save as...",this,SLOT(save_as()));
 menu_file->addSeparator();
 
 // Последние открытые файлы
@@ -210,50 +210,50 @@ for(int i=0;i<recent.count();i++) {
 
 menu_file->addSeparator();
 
-file_exit = new QAction("Sortie",this);
+file_exit = new QAction("Exit",this);
 file_exit->setShortcut(QKeySequence::Quit);
 menu_file->addAction(file_exit);
 //----------------
-part_store = new QAction("Sortir с заголовком",this);
+part_store = new QAction("Exit with title",this);
 menu_part->addAction(part_store);
 
-part_extract = new QAction("Sortir без заголовка",this);
+part_extract = new QAction("Exit without title",this);
 part_extract->setShortcut(QKeySequence("Ctrl+T"));
 menu_part->addAction(part_extract);
 
-part_replace = new QAction("Remplacer образ раздела",this);
+part_replace = new QAction("Replace image section",this);
 menu_part->addAction(part_replace);
 
-MoveUp = new QAction("Monter",this);
+MoveUp = new QAction("ascend",this);
 MoveUp->setShortcut(QKeySequence("Ctrl+Up"));
 menu_part->addAction(MoveUp);
 
-MoveDown = new QAction("Descendre",this);
+MoveDown = new QAction("Descend",this);
 MoveDown->setShortcut(QKeySequence("Ctrl+Down"));
 menu_part->addAction(MoveDown);
 
-Delete = new QAction("Supprimer",this);
+Delete = new QAction("Remove",this);
 Delete->setShortcut(QKeySequence("Ctrl+Del"));
 menu_part->addAction(Delete);
 
-part_copy_header = new QAction("Copie заголовок",this);
+part_copy_header = new QAction("Copy header",this);
 menu_part->addAction(part_copy_header);
 //----------------
-Menu_Oper_flash = new QAction("Modem flash",this);
+Menu_Oper_flash = new QAction("Flash modem",this);
 Menu_Oper_flash->setEnabled(false);
 Menu_Oper_flash->setShortcut(QKeySequence("Alt+B"));
 menu_oper->addAction(Menu_Oper_flash);
 
-Menu_Oper_USBDload = new QAction("Chargement usbdloader",this);
+Menu_Oper_USBDload = new QAction("Loading usbdloader",this);
 Menu_Oper_USBDload->setShortcut(QKeySequence("Alt+U"));
 menu_oper->addAction(Menu_Oper_USBDload);
 menu_oper->addSeparator();
 
-Menu_Oper_Reboot = new QAction("Redémarrer le modem",this);
+Menu_Oper_Reboot = new QAction("Restart the modem",this);
 menu_oper->addAction(Menu_Oper_Reboot);
 menu_oper->addSeparator();
 
-Menu_Oper_signinfo = new QAction("Les informations о цифровой подписи",this);
+Menu_Oper_signinfo = new QAction("Digital signature info",this);
 Menu_Oper_signinfo->setShortcut(QKeySequence("Alt+D"));
 Menu_Oper_signinfo->setEnabled(false);
 menu_oper->addAction(Menu_Oper_signinfo);

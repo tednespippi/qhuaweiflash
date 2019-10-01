@@ -61,7 +61,7 @@ oldfont=font;
 // Заголовок панели
 font.setPointSize(font.pointSize()+7);
 font.setBold(true);
-hdrlabel=new QLabel("Éditeur de section NVDLOAD",this);
+hdrlabel=new QLabel("NVDLOAD section editor",this);
 hdrlabel->setFont(font);
 hdrlabel->setStyleSheet("QLabel { color : green; }");
 vlm->addWidget(hdrlabel,0,Qt::AlignHCenter);
@@ -71,8 +71,8 @@ labelfont=oldfont;
 labelfont.setPointSize(labelfont.pointSize()+2);
 
 // Type de fichier
-if (filetype == 1) str = "Type de structure NVDLOAD: 1 (chipset V7R11 et plus ancien)";
-else str = "Type de structure NVDLOAD: 2 (chipset V7R22 et plus récent)";
+if (filetype == 1) str = "NVDLOAD structure type: 1 (chipset V7R11 and older)";
+else str = "NVDLOAD structure type: 2 (V7R22 chipset and newer)";
 hdrlabel=new QLabel(str,this);
 hdrlabel->setFont(labelfont);
 hdrlabel->setStyleSheet("QLabel { color : blue; }");
@@ -94,12 +94,12 @@ comphdr1->setFont(font);
 comphdr1->setStyleSheet("QLabel { color : red; }");
 lcomp->addWidget(comphdr1,0,0);
 
-comphdr2=new QLabel("La taille",this);
+comphdr2=new QLabel("The size ", this);
 comphdr2->setFont(font);
 comphdr2->setStyleSheet("QLabel { color : orange; }");
 lcomp->addWidget(comphdr2,0,1);
 
-comphdr3=new QLabel("Les équipes",this);
+comphdr3=new QLabel("The teams",this);
 comphdr3->setFont(font);
 comphdr3->setStyleSheet("QLabel { color : green; }");
 lcomp->addWidget(comphdr3,0,2,1,2,Qt::AlignHCenter);
@@ -144,66 +144,66 @@ lcomp->addWidget(size3,4,1,Qt::AlignHCenter);
 
 
 // кнопки извлечения 
-extr1=new QPushButton("Sortir",this);
+extr1=new QPushButton("Exit",this);
 connect(extr1,SIGNAL(clicked()),this,SLOT(extract1()));
 lcomp->addWidget(extr1,1,2);
 
 if (hdr.xnv_xml.len != 0) {
- extr2=new QPushButton("Sortir",this);
+ extr2=new QPushButton("Exit",this);
  connect(extr2,SIGNAL(clicked()),this,SLOT(extract2()));
  lcomp->addWidget(extr2,2,2);
 }
 
 if (hdr.cust_xml.len != 0) {
- extr3=new QPushButton("Sortir",this);
+ extr3=new QPushButton("Exit",this);
  connect(extr3,SIGNAL(clicked()),this,SLOT(extract3()));
  lcomp->addWidget(extr3,3,2);
 }
 
 if (hdr.xnv_map.len != 0) {
- extr4=new QPushButton("Sortir",this);
+ extr4=new QPushButton("Exit",this);
  connect(extr4,SIGNAL(clicked()),this,SLOT(extract4()));
  lcomp->addWidget(extr4,4,2);
 }
 
 // кнопки замены
-repl1=new QPushButton("Remplacer",this);
+repl1=new QPushButton("Replace",this);
 connect(repl1,SIGNAL(clicked()),this,SLOT(replace1()));
 lcomp->addWidget(repl1,1,3);
 
 if (hdr.xnv_xml.len != 0) {
- repl2=new QPushButton("Remplacer",this);
+ repl2=new QPushButton("Replace",this);
  connect(repl2,SIGNAL(clicked()),this,SLOT(replace2()));
  lcomp->addWidget(repl2,2,3);
 }
 
 if (hdr.cust_xml.len != 0) {
- repl3=new QPushButton("Remplacer",this);
+ repl3=new QPushButton("Replace",this);
  connect(repl3,SIGNAL(clicked()),this,SLOT(replace3()));
  lcomp->addWidget(repl3,3,3);
 }
 
 if (hdr.xnv_map.len != 0) {
- repl4=new QPushButton("Remplacer",this);
+ repl4=new QPushButton("Replace",this);
  connect(repl4,SIGNAL(clicked()),this,SLOT(replace4()));
  lcomp->addWidget(repl4,4,3);
 }
 
 // кнопки редактирования
 
-edit1=new QPushButton("Pour éditer",this);
+edit1=new QPushButton("To edit",this);
 connect(edit1,SIGNAL(clicked()),this,SLOT(nvexpl()));
 lcomp->addWidget(edit1,1,4);
 
 
 if (hdr.xnv_xml.len != 0) {
- edit2=new QPushButton("Pour éditer",this);
+ edit2=new QPushButton("To edit",this);
  connect(edit2,SIGNAL(clicked()),this,SLOT(xedit2()));
  lcomp->addWidget(edit2,2,4);
 }
 
 if (hdr.cust_xml.len != 0) {
- edit3=new QPushButton("Pour éditer",this);
+ edit3=new QPushButton("To edit",this);
  connect(edit3,SIGNAL(clicked()),this,SLOT(xedit3()));
  lcomp->addWidget(edit3,3,4);
 }
@@ -228,7 +228,7 @@ if (changed) rebuild_data();
 
 // проверяем, изменились ли данные
 if ((ptable->psize(pnum) != plen) || (memcmp(data,ptable->iptr(pnum),plen) != 0)) {
-  reply=QMessageBox::warning(this,"Enregistrement de section","Le contenu раздела изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
+  reply=QMessageBox::warning(this,"Section recording ", " Content changed, save?",QMessageBox::Ok | QMessageBox::Cancel);
   if (reply == QMessageBox::Ok) {
     ptable->replace(pnum,data,plen);
   }
@@ -283,12 +283,12 @@ switch(type) {
     break;
 }   
 
-filename=QFileDialog::getSaveFileName(this,"Prénom сохраняемого файла",filename,"All files (*)");
+filename=QFileDialog::getSaveFileName(this,"Stored file name",filename,"All files (*)");
 if (filename.isEmpty()) return;
 
 QFile out(filename,this);
 if (!out.open(QIODevice::WriteOnly)) {
-    QMessageBox::critical(0,"Erreur","Erreur lors de la création du fichier");
+    QMessageBox::critical(0, "Error", "Error while creating file");
     return;
 }
 out.write((char*)(data+start),len);
@@ -318,12 +318,12 @@ QString filename="";
 uint32_t fsize;
 
 // выбор файла
-filename=QFileDialog::getOpenFileName(this,"Prénom файла",filename,"All files (*)");
+filename=QFileDialog::getOpenFileName(this,"File name",filename,"All files (*)");
 if (filename.isEmpty()) return;
 
 QFile out(filename,this);
 if (!out.open(QIODevice::ReadOnly)) {
-    QMessageBox::critical(0,"Erreur","Erreur de lecture du fichier");
+    QMessageBox::critical(0, "Error", "Error reading file");
     return;
 }
 

@@ -43,8 +43,8 @@ if (strncmp((char*)replybuf+2,"2.0",3) == 0) return 1;
 for (i=2;i<res;i++) {
   if (replybuf[i] == 0x0d) replybuf[i]=0;
 }  
-str.sprintf("Version de moniteur de microprogramme incorrecte -% s",replybuf+2);
-QMessageBox::critical(0,"Erreur",str);
+str.sprintf("Incorrect firmware monitor version -% s",replybuf+2);
+QMessageBox::critical(0,"Error",str);
 return -1;
 }
 
@@ -180,15 +180,15 @@ uint8_t signflag=0,rebootflag=0;
 unsigned char OKrsp[]={0x0d, 0x0a, 0x4f, 0x4b, 0x0d, 0x0a};
   
 QDialog* Flasher=new QDialog;
-Flasher->setWindowTitle("Micrologiciel du modem");
-QVBoxLayout* vl=new QVBoxLayout(Flasher);  
+Flasher->setWindowTitle("Modem Firmware"); 
+QVBoxLayout* vl=new QVBoxLayout(Flasher);
 
 QFont font;
 font.setPointSize(17);
 font.setBold(true);
 font.setWeight(75);
 
-QLabel* lbl1=new QLabel("Micrologiciel du modem");
+QLabel* lbl1 = new QLabel("Modem Firmware"); 
 lbl1->setFont(font);
 lbl1->setScaledContents(true);
 lbl1->setStyleSheet("QLabel { color : blue; }");
@@ -196,7 +196,7 @@ lbl1->setStyleSheet("QLabel { color : blue; }");
 
 vl->addWidget(lbl1,4,Qt::AlignHCenter);
 
-QCheckBox* dsign = new QCheckBox("Utiliser une signature numérique",Flasher);
+QCheckBox* dsign = new QCheckBox("Use a digital signature", Flasher); 
 vl->addWidget(dsign);
 
 // проверяем наличие подписи и деактивируем управляющие кнопки, если ее нет
@@ -212,7 +212,7 @@ else {
 }
 
 
-QCheckBox* creboot = new QCheckBox("Redémarrez à la fin du firmware",Flasher);
+QCheckBox* creboot = new QCheckBox("Restart at the end of the firmware",Flasher);
 creboot->setChecked(true);
 vl->addWidget(creboot);
 
@@ -241,10 +241,10 @@ Flasher=new QDialog;
 QFormLayout* glm=new QFormLayout(Flasher);
 
 QLabel* pversion = new QLabel(Flasher);
-glm->addRow("Version du protocole:",pversion);
+glm->addRow("Protocol version:",pversion);
 
 QLabel* cpart = new QLabel(Flasher);
-glm->addRow("Section actuelle:",cpart);
+glm->addRow("Current section:",cpart);
 
 QProgressBar* partbar = new QProgressBar(Flasher);
 partbar->setValue(0);
@@ -258,7 +258,7 @@ Flasher->show();
   
 // Настройка SIO
 if (!open_port())  {
-  QMessageBox::critical(0,"Erreur","Le port série ne s'ouvre pas");
+  QMessageBox::critical(0, "Error", "The serial port does not open");
   goto leave;
 }  
   
@@ -266,12 +266,12 @@ tcflush(siofd,TCIOFLUSH);  // очистка выходного буфера
 
 res=dloadversion();
 if (res == -1) {
-  QMessageBox::critical(0,"Erreur","Version du firmware non supportée");
+  QMessageBox::critical(0, "Error", "Unsupported firmware version");
   goto leave;
 }
 
 if (res == 0) {
-  QMessageBox::critical(0,"Erreur","Le port n'est pas en mode firmware");
+  QMessageBox::critical(0, "Error", "The port is not in firmware mode");
   goto leave;
 }  
 
@@ -279,7 +279,7 @@ if (res == 0) {
 if (signflag) { 
   res=send_signver();
   if (!res) {
-    QMessageBox::critical(0,"Erreur","Erreur de vérification de signature numérique");
+    QMessageBox::critical(0, "Error", "Digital Signature Verification Error");
     goto leave;
   }  
 }  
@@ -288,24 +288,24 @@ if (signflag) {
 usleep(100000);
 res=atcmd("^DATAMODE",replybuf);
 if (res != 6) {
-  QMessageBox::critical(0,"Erreur de connexion HDLC","Réponse incorrecte à la commande ^ datamode");
+  QMessageBox::critical(0, "HDLC connection error", "Incorrect response to the ^ datamode command");
   goto leave;
 }  
 if (memcmp(replybuf,OKrsp,6) != 0) {
-  QMessageBox::critical(0,"Erreur de connexion HDLC","Commande ^ Datamode rejetée par modem");
+  QMessageBox::critical(0, "HDLC Connection Error", "^ Datamode Reject Modem Command");
   goto leave;
 }  
 
 iolen=send_cmd(&cmdver,1,(unsigned char*)replybuf);
 if (iolen == 0) {
-  QMessageBox::critical(0,"Erreur de protocole HDLC","Impossible d'obtenir la version du firmware");
+  QMessageBox::critical(0, "HDLC protocol error", "Unable to get the firmware version");
   goto leave;
 }  
 // отбрасываем начальный 7E если он есть в ответе
 if (replybuf[0] == 0x7e) memcpy(replybuf,replybuf+1,iolen-1);
 
 if (replybuf[0] != 0x0d) {
-  QMessageBox::critical(0,"Erreur de protocole HDLC","Commande rejetée par le modem pour obtenir la version du protocole");
+  QMessageBox::critical(0,"HDLC protocol error ", " Command rejected by the modem to obtain the protocol version");
   goto leave;
 }  
 
@@ -326,8 +326,8 @@ for(part=0;part<ptable->index();part++) {
 
  // команда начала раздела
  if (!dload_start(ptable->code(part),ptable->psize(part))) {
-  txt.sprintf("Section% s rejetée",ptable->name(part)); 
-  QMessageBox::critical(0,"Erreur",txt);
+  txt.sprintf("Section% s rejected",ptable->name(part)); 
+  QMessageBox::critical(0,"Error",txt);
   goto leave;
 }  
     
@@ -340,8 +340,8 @@ for(blk=0;blk<maxblock;blk++) {
 
  // Отсылаем очередной блок
   if (!dload_block(part,blk,ptable->iptr(part))) {
-   txt.sprintf("Bloc% i de la section% s rejetée",blk,ptable->name(part)); 
-   QMessageBox::critical(0,"une erreur",txt);
+   txt.sprintf("Block % i of section% s rejected",blk,ptable->name(part));
+   QMessageBox::critical(0,"a mistake",txt);
    goto leave;
  }  
 }    
@@ -362,7 +362,7 @@ else end_hdlc();
 totalbar->setValue(100);
 partbar->setValue(100);
 QCoreApplication::processEvents();
-QMessageBox::information(0,"ОК","Enregistrement terminé sans erreur");
+QMessageBox::information(0,"ОК", "Registration completed without error");
 
 // Завершаем процесс
 leave:

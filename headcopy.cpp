@@ -26,11 +26,11 @@ font.setPointSize(14);
 font.setBold(true);
 font.setWeight(75);
 
-QLabel* label1 = new QLabel("Source de",qd);
+QLabel* label1 = new QLabel("Source",qd);
 label1->setFont(font);
 lm->addWidget(label1,0,0);
 
-QLabel* label2 = new QLabel("Récepteur",qd);
+QLabel* label2 = new QLabel("Receiver",qd);
 label2->setFont(font);
 lm->addWidget(label2,0,1);
 
@@ -54,7 +54,7 @@ for(i=0;i<ptable->index();i++) {
   from->insertItem(i,str);
 }
 // формируем список приемников копирования
-to->insertItem(0,"toutes les sections");
+to->insertItem(0,"all sections");
 for(i=0;i<ptable->index();i++) {
   sprintf(str,"%02i %s",i,ptable->name(i));
   to->insertItem(i+1,str);

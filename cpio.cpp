@@ -33,7 +33,7 @@ plen=ptable->psize(pnum);
 vlm=new QVBoxLayout(this);
 
 // тулбар
-toolbar=new QToolBar("Opérations de fichier",this);
+toolbar=new QToolBar("File Operations",this);
 vlm->addWidget(toolbar);
 
 // меню редактора
@@ -41,27 +41,27 @@ menu_edit = new QMenu("CPIO Editor",menubar);
 menubar->addAction(menu_edit->menuAction());
 
 // Пункты меню редактора
-menu_edit->addAction(QIcon::fromTheme("monter"),"Monter d'un niveau",this,SLOT(go_up()),QKeySequence("Backspace"));
-menu_edit->addAction(QIcon::fromTheme("document-save"),"Sortir файл",this,SLOT(extract_file()),QKeySequence("F11"));
-menu_edit->addAction(QIcon::fromTheme("object-flip-vertical"),"Remplacer файл",this,SLOT(replace_file()),0);
-menu_edit->addAction(QIcon::fromTheme("edit-delete"),"Supprimer le fichier",this,SLOT(delete_file()),QKeySequence("Del"));
-menu_edit->addAction(QIcon(":/icon_hex.png"),"Visionneuse / Editeur HEX",this,SLOT(hexedit_file()),QKeySequence("F2"));
-menu_edit->addAction(QIcon(":/icon_view.png"),"Vue texte",this,SLOT(view_file()),QKeySequence("F3"));
-menu_edit->addAction(QIcon(":/icon_edit.png"),"Éditeur de texte",this,SLOT(edit_file()),QKeySequence("F4"));
-menu_edit->addAction(QIcon::fromTheme("list-add"),"Ajouter un nouveau fichier",this,SLOT(add_file()),QKeySequence("+"));
+menu_edit->addAction(QIcon::fromTheme("monter"), "Monter d'un niveau", this, SLOT(go_up()), QKeySequence("Backspace"));
+menu_edit->addAction(QIcon::fromTheme("document-save"), "Sortir файл", this, SLOT(extract_file()), QKeySequence("F11"));
+menu_edit->addAction(QIcon::fromTheme("object-flip-vertical"), "Remplacer файл", this, SLOT(replace_file()), 0);
+menu_edit->addAction(QIcon::fromTheme("edit-delete"), "Supprimer le fichier", this, SLOT(delete_file()), QKeySequence("Del"));
+menu_edit->addAction(QIcon(":/icon_hex.png"), "Visionneuse / Editeur HEX", this, SLOT(hexedit_file()), QKeySequence("F2"));
+menu_edit->addAction(QIcon(":/icon_view.png"), "Vue texte", this, SLOT(view_file()), QKeySequence("F3"));
+menu_edit->addAction(QIcon(":/icon_edit.png"), "Éditeur de texte", this, SLOT(edit_file()), QKeySequence("F4"));
+menu_edit->addAction(QIcon::fromTheme("list-add"), "Ajouter un nouveau fichier", this, SLOT(add_file()), QKeySequence("+"));
 menu_edit->addSeparator();
-menu_edit->addAction(QIcon::fromTheme("file-save"),"Enregistrer les modifications",this,SLOT(saveall()),QKeySequence("Ctrl+S"));
+menu_edit->addAction(QIcon::fromTheme("file-save"), "Enregistrer les modifications", this, SLOT(saveall()), QKeySequence("Ctrl+S"));
 
 // Пункты тулбара
-toolbar->addAction(QIcon::fromTheme("monter"),"Monter d'un niveau",this,SLOT(go_up()));
-toolbar->addAction(QIcon::fromTheme("document-save"),"Sortir файл",this,SLOT(extract_file()));
-toolbar->addAction(QIcon::fromTheme("object-flip-vertical"),"Remplacer файл",this,SLOT(replace_file()));
-toolbar->addAction(QIcon::fromTheme("edit-delete"),"Supprimer le fichier",this,SLOT(delete_file()));
-toolbar->addAction(QIcon(":/icon_hex.png"),"Visionneuse / Editeur HEX",this,SLOT(hexedit_file()));
-toolbar->addAction(QIcon(":/icon_view.png"),"Vue texte",this,SLOT(view_file()));
-toolbar->addAction(QIcon(":/icon_edit.png"),"Éditeur de texte",this,SLOT(edit_file()));
+toolbar->addAction(QIcon::fromTheme("monter"), "Monter d'un niveau", this, SLOT(go_up()));
+toolbar->addAction(QIcon::fromTheme("document-save"), "Sortir файл", this, SLOT(extract_file()));
+toolbar->addAction(QIcon::fromTheme("object-flip-vertical"), "Remplacer файл", this, SLOT(replace_file()));
+toolbar->addAction(QIcon::fromTheme("edit-delete"), "Supprimer le fichier", this, SLOT(delete_file()));
+toolbar->addAction(QIcon(":/icon_hex.png"), "Visionneuse / Editeur HEX", this, SLOT(hexedit_file()));
+toolbar->addAction(QIcon(":/icon_view.png"), "Vue texte", this, SLOT(view_file()));
+toolbar->addAction(QIcon(":/icon_edit.png"), "Éditeur de texte", this, SLOT(edit_file()));
 toolbar->addSeparator();
-toolbar->addAction(QIcon::fromTheme("list-add"),"Ajouter un nouveau fichier",this,SLOT(add_file()));
+toolbar->addAction(QIcon::fromTheme("list-add"), "Ajouter un nouveau fichier", this, SLOT(add_file()));
 toolbar->setEnabled(false);
 // закрываем доступ к меню
 menu_edit->setEnabled(false);
@@ -74,8 +74,8 @@ while(iptr < (pdata+plen)) {
   // Ищем сигнатуру заголовка очередного файла
   while(1) {
    if (iptr >= (pdata+plen)) {
-     QMessageBox::critical(0,"Erreur CPIO","Le limiteur de débit de la remorque n'a pas été détecté !!!");
-     goto ldone;
+	   QMessageBox::critical(0, "CPIO error", "The trailer speed limiter was not detected !!!");
+	   goto ldone;
    }  
    if (is_cpio(iptr)) break; // нашли сигнатуру
    iptr++; // ищем ее дальше
@@ -101,8 +101,8 @@ QMessageBox::StandardButton reply;
 
 // Проверяем, не изменлось ли что-нибудь внутри  
 if (is_modified) {
-  reply=QMessageBox::warning(this,"Enregistrement de section","Le contenu раздела изменено, сохранить?",QMessageBox::Ok | QMessageBox::Cancel);
-  if (reply == QMessageBox::Ok) repack_cpio();
+	reply = QMessageBox::warning(this, "Section record", "The content section changed, save?", QMessageBox::Ok | QMessageBox::Cancel);
+	if (reply == QMessageBox::Ok) repack_cpio();
 }  
 // удаляем элементы корневого каталога
 qDeleteAll(*rootdir);
@@ -351,13 +351,13 @@ fd=selected_file();
 
 if (((fd->fmode()) & C_ISREG) == 0) {
   // нерегулярный файл - его извлекать нельзя
-  QMessageBox::critical(0,"Erreur","Les fichiers irréguliers ne peuvent pas être extraits");  
-  return;
+	QMessageBox::critical(0, "Error", "Irregular files can not be extracted");  
+	return;
 }
 
 QString fn=fd->cfname();
 
-fn=QFileDialog::getSaveFileName(this,"Enregistrer le fichier",fn,"All files (*)");
+fn = QFileDialog::getSaveFileName(this, "Save file", fn, "All files (*)"); 
 if (fn.isEmpty()) return;
 out=fopen(fn.toLocal8Bit().data(),"w");
 fwrite(fd->fdata(),1,fd->fsize(),out);
@@ -377,17 +377,17 @@ fd=selected_file();
 
 if (((fd->fmode()) & C_ISREG) == 0) {
   // нерегулярный файл - его извлекать нельзя
-  QMessageBox::critical(0,"Erreur","Les fichiers irréguliers ne peuvent pas être remplacés");  
-  return;
+	QMessageBox::critical(0, "Error", "Irregular files can not be overwritten");
+	return;
 }
 
-fn=QFileDialog::getOpenFileName(this,"Remplacement de fichier",fn,"All files (*)");
+fn = QFileDialog::getOpenFileName(this, "File Replacement", fn, "All files (*)"); 
 if (fn.isEmpty()) return;
 
 QFile in(fn,this);
 if (!in.open(QIODevice::ReadOnly)) {
-    QMessageBox::critical(0,"Erreur","Erreur de lecture du fichier");
-    return;
+	QMessageBox::critical(0, "Error", "Error reading file");
+	return;
 }
 fsize=in.size();
 uint8_t* fbuf=new uint8_t[fsize]; // файловый буфер
@@ -408,8 +408,8 @@ fd=selected_file();
 
 if (((fd->fmode()) & C_ISREG) == 0) {
   // нерегулярный файл - его извлекать нельзя
-  QMessageBox::critical(0,"Erreur","Les fichiers irréguliers ne peuvent pas être visualisés / édités.");  
-  return;
+	QMessageBox::critical(0, "Error", "Irregular files can not be viewed / edited.");
+	return;
 }
 
 view=new viewer(0,0,readonly,fd->fname(),fd);  
@@ -435,8 +435,8 @@ fd=selected_file();
 
 if (((fd->fmode()) & C_ISREG) == 0) {
   // нерегулярный файл - его извлекать нельзя
-  QMessageBox::critical(0,"Erreur","Les fichiers irréguliers ne peuvent pas être visualisés / édités.");  
-  return;
+	QMessageBox::critical(0, "Error", "Irregular files can not be viewed / edited.");
+	return;
 }
 
 hview=new hexfileviewer(fd);  
@@ -515,13 +515,13 @@ memset(&hdr,'0',sizeof(hdr));
 memcpy(hdr.c_magic,"070701",6);
 memcpy(hdr.c_mode,"000081B4",8);
 
-fn=QFileDialog::getOpenFileName(this,"Ajouter un nouveau fichier",fn,"All files (*)");
+fn = QFileDialog::getOpenFileName(this, "Add a new file", fn, "All files (*)"); 
 if (fn.isEmpty()) return;
 
 QFile in(fn,this);
 if (!in.open(QIODevice::ReadOnly)) {
-    QMessageBox::critical(0,"Erreur","Erreur de lecture du fichier");
-    return;
+	QMessageBox::critical(0, "Error", "Error reading file");
+	return;
 }
 fsize=in.size();
 if (fsize != 0) {

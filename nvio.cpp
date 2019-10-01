@@ -20,7 +20,7 @@ int i;
 for (i=0;i<(int)nvhd.file_num;i++) {
   if (flist[i].id == (uint32_t)fid) return flist[i].offset;
 }
-printf("\ n - Erreur de structure de fichier - les composants #% i n’existent pas \ n",fid);
+printf("\ n - File structure error - #% i components do not exist \ n",fid);
 exit(1);
 }
 

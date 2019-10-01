@@ -352,8 +352,8 @@ if (slptr != 0) {
   slptr++;  // теперь slptr показывает на остаток имени файла
   fdir=find_dir(filename, dir); // ищем подкаталог в текущем каталоге
   if (fdir == 0) {
-    str.sprintf("Un fichier sans répertoire a été trouvé dans le flux -% s",fname);
-    QMessageBox::critical(0,"Erreur CPIO",str);
+    str.sprintf("A file without a directory was found in the feed -% s",fname);
+    QMessageBox::critical(0,"Error CPIO",str);
     return 0; // не нашли - une erreur структуры, файл без каталога
   }
 // загружаем файл в вектор подкаталога   

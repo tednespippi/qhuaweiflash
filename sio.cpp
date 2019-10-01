@@ -113,9 +113,9 @@ unsigned int send_unframed_buf(uint8_t* outcmdbuf, unsigned int outlen) {
 
 
 tcflush(siofd,TCIOFLUSH);  // сбрасываем недочитанный буфер ввода
-if (write(siofd,"\x7e",1)  == 0) { printf("\ n Erreur lors de l'écriture du préfixe de commande");return 0; } // отсылаем префикс
+if (write(siofd,"\x7e",1)  == 0) { printf("\ n Error writing command prefix");return 0; } // отсылаем префикс
 
-if (write(siofd,outcmdbuf,outlen) == 0) {   printf("\ n erreur d'écriture de commande");return 0;  }
+if (write(siofd,outcmdbuf,outlen) == 0) {   printf("\ n command write error");return 0;  }
 tcdrain(siofd);  // ждем окончания вывода блока
 return 1;
 }
@@ -148,7 +148,7 @@ replybuf[incount++]=c;
 if (masslen != 0) {
  res=read(siofd,replybuf+1,masslen-1);
  if (res != (masslen-1)) {
-   printf("\ nLa réponse du modem est trop courte:% i octets,% i octets attendus \ n",res+1,masslen);
+   printf("\ nThe modem response is too short:% i bytes,% i bytes expected\ n",res+1,masslen);
    dump(replybuf,res+1,0);
    return 0;
  }  

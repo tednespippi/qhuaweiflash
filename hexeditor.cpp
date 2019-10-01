@@ -45,18 +45,18 @@ lm=new QVBoxLayout(this);
 lm->addWidget(dhex);
 
 // меню редактора
-menu_edit = new QMenu("Éditeur HEX",menubar);
+menu_edit = new QMenu("HEX Editor",menubar);
 menubar->addMenu(menu_edit);
 
 // меню undo-redo
-menu_undo=menu_edit->addAction("Annuler",dhex,SLOT(undo()),QKeySequence::Undo);
-menu_redo=menu_edit->addAction("Rejouer",dhex,SLOT(redo()),QKeySequence::Redo);
+menu_undo=menu_edit->addAction("Cancel",dhex,SLOT(undo()),QKeySequence::Undo);
+menu_redo=menu_edit->addAction("Replay",dhex,SLOT(redo()),QKeySequence::Redo);
 // Увеличение-Уменьшение шрифта
-menu_enlarge_font=menu_edit->addAction("Augmenter la police",this,SLOT(EnlargeFont()),QKeySequence("Ctrl++"));
-menu_reduce_font=menu_edit->addAction("Réduire la taille de la police",this,SLOT(ReduceFont()),QKeySequence("Ctrl+-"));
+menu_enlarge_font=menu_edit->addAction("Increase font",this,SLOT(EnlargeFont()),QKeySequence("Ctrl++"));
+menu_reduce_font=menu_edit->addAction("Reduce the font size",this,SLOT(ReduceFont()),QKeySequence("Ctrl+-"));
 
 // подменю выбора ширины hex-редактора
-hwidth = new QMenu("Octet en ligne",this);
+hwidth = new QMenu("Byte Online",this);
 wsel=new QActionGroup(hwidth);
 wsel->setExclusive(true);
 w16=hwidth->addAction("16");
@@ -101,7 +101,7 @@ switch(bpl) {
 dhex->setBytesPerLine(bpl);
 menu_edit->addMenu(hwidth);
 
-menu_ro=menu_edit->addAction("Lecture seule",this,SLOT(ROswitch()),QKeySequence("Ctrl+e"));
+menu_ro=menu_edit->addAction("Read only",this,SLOT(ROswitch()),QKeySequence("Ctrl+e"));
 menu_ro->setCheckable(true);
 menu_ro->setChecked(true);
 
