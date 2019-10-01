@@ -106,7 +106,7 @@ QComboBox *PortSelector;
 QToolButton *RefreshPorts;
 
 void open_recent(int n);
-void settitle() {setWindowTitle("Huawei firmware editor/flasher");} 
+void settitle() {setWindowTitle("Huawei Firmware Editor[English version by pearlxcore]");} 
 void ask_save();
 void removeEditor();
 
