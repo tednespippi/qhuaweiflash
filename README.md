@@ -15,6 +15,7 @@ Dependencies:
 
 To assemble this utility, use the commands:
 
-    - export QT_SELECT = qt5
-    - qmake
-    - make
+    qmake 
+    make qhuaweiflash 
+    qmake 
+    make 
