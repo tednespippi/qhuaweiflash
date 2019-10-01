@@ -99,7 +99,7 @@ comphdr2->setFont(font);
 comphdr2->setStyleSheet("QLabel { color : orange; }");
 lcomp->addWidget(comphdr2,0,1);
 
-comphdr3=new QLabel("The teams",this);
+comphdr3=new QLabel("command",this);
 comphdr3->setFont(font);
 comphdr3->setStyleSheet("QLabel { color : green; }");
 lcomp->addWidget(comphdr3,0,2,1,2,Qt::AlignHCenter);
@@ -191,19 +191,19 @@ if (hdr.xnv_map.len != 0) {
 
 // кнопки редактирования
 
-edit1=new QPushButton("To edit",this);
+edit1=new QPushButton("Edit",this);
 connect(edit1,SIGNAL(clicked()),this,SLOT(nvexpl()));
 lcomp->addWidget(edit1,1,4);
 
 
 if (hdr.xnv_xml.len != 0) {
- edit2=new QPushButton("To edit",this);
+ edit2=new QPushButton("Edit",this);
  connect(edit2,SIGNAL(clicked()),this,SLOT(xedit2()));
  lcomp->addWidget(edit2,2,4);
 }
 
 if (hdr.cust_xml.len != 0) {
- edit3=new QPushButton("To edit",this);
+ edit3=new QPushButton("Edit",this);
  connect(edit3,SIGNAL(clicked()),this,SLOT(xedit3()));
  lcomp->addWidget(edit3,3,4);
 }

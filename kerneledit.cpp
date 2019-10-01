@@ -40,7 +40,7 @@ oldfont=font;
 // Заголовок панели
 font.setPointSize(font.pointSize()+7);
 font.setBold(true);
-hdrlabel=new QLabel("KERNEL éditeur de section",this);
+hdrlabel=new QLabel("KERNEL section editor",this);
 hdrlabel->setFont(font);
 hdrlabel->setStyleSheet("QLabel { color : green; }");
 vlm->addWidget(hdrlabel,0,Qt::AlignHCenter);
@@ -120,7 +120,7 @@ comphdr2->setFont(font);
 comphdr2->setStyleSheet("QLabel { color : orange; }");
 lcomp->addWidget(comphdr2,0,1);
 
-comphdr3=new QLabel("The teams",this);
+comphdr3=new QLabel("Command",this);
 comphdr3->setFont(font);
 comphdr3->setStyleSheet("QLabel { color : green; }");
 lcomp->addWidget(comphdr3,0,2,1,2,Qt::AlignHCenter);

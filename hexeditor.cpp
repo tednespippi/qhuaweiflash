@@ -56,7 +56,7 @@ menu_enlarge_font=menu_edit->addAction("Increase font",this,SLOT(EnlargeFont()),
 menu_reduce_font=menu_edit->addAction("Reduce the font size",this,SLOT(ReduceFont()),QKeySequence("Ctrl+-"));
 
 // подменю выбора ширины hex-редактора
-hwidth = new QMenu("Byte Online",this);
+hwidth = new QMenu("Byte per line",this);
 wsel=new QActionGroup(hwidth);
 wsel->setExclusive(true);
 w16=hwidth->addAction("16");

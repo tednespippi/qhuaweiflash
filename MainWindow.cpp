@@ -214,10 +214,10 @@ file_exit = new QAction("Exit",this);
 file_exit->setShortcut(QKeySequence::Quit);
 menu_file->addAction(file_exit);
 //----------------
-part_store = new QAction("Extract with title",this);
+part_store = new QAction("Extract with header",this);
 menu_part->addAction(part_store);
 
-part_extract = new QAction("Extract without title",this);
+part_extract = new QAction("Extract without header",this);
 part_extract->setShortcut(QKeySequence("Ctrl+T"));
 menu_part->addAction(part_extract);
 
