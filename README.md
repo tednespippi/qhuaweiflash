@@ -13,8 +13,8 @@ The utility is built on the Qt graphics package and a Windows version of the bal
 
 Dependencies:
 
-    apt-get install qt5-qmake qtbase5-dev zlib1g-dev
-
+    sudo apt-get install qt5-default
+    
 To assemble this utility, use the commands:
 
     qmake 
